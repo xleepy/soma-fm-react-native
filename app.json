@@ -1,0 +1,12 @@
+{
+  "name": "somafm-react-native",
+  "displayName": "somafm-react-native",
+  "expo": {
+    "name": "somafm-react-native",
+    "slug": "somafm-react-native",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
