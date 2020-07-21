@@ -1,6 +1,6 @@
-## Soma FM app
+## Soma FM app ---> Work in progress :)
 
-React native application build with expo-cli template.
+React native application build with create-react-native template.
 
 ### usage:
 
