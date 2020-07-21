@@ -1,12 +1,18 @@
 {
   "name": "somafm-react-native",
-  "displayName": "somafm-react-native",
+  "displayName": "Soma FM",
   "expo": {
     "name": "somafm-react-native",
     "slug": "somafm-react-native",
+    "splash": {
+      "image": "./assets/images/Splash.png",
+      "resizeMode": "cover"
+    },
+    "android": {
+      "package": "com.xleepy.somafm",
+      "versionCode": 1
+    },
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*", "assets/icons/*"]
   }
 }

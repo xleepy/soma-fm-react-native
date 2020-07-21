@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "expo": "~38.0.1",
+    "expo-asset": "^8.1.7",
+    "expo-av": "^8.3.0",
+    "expo-font": "^8.2.1",
     "expo-splash-screen": "~0.3.1",
     "expo-status-bar": "^1.0.0",
     "expo-updates": "~0.2.10",
@@ -19,11 +22,16 @@
     "react-native-reanimated": "~1.9.0",
     "react-native-screens": "~2.9.0",
     "react-native-unimodules": "~0.10.1",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "react-native-xml2js": "^1.0.3",
+    "react-router": "^5.2.0",
+    "react-router-native": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@expo/webpack-config": "^0.12.20",
     "babel-jest": "~25.2.6",
+    "babel-loader": "^8.1.0",
     "jest": "~25.2.6",
     "react-test-renderer": "~16.11.0"
   },
