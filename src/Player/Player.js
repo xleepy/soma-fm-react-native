@@ -3,7 +3,12 @@ import { View, Image, StyleSheet } from "react-native";
 
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { SelectedChannelContext } from "../App";
-import TrackPlayer from "react-native-track-player";
+import {
+  useTrackPlayerEvents,
+  TrackPlayerEvents,
+  STATE_PLAYING,
+} from "react-native-track-player";
+import { usePlayerSetup, usePlayerControls } from "./hooks";
 
 const styles = StyleSheet.create({
   btn: {
@@ -49,46 +54,31 @@ function getConditionalStyles(isPlaying) {
 const playIcon = require("../../assets/icons/play.png");
 const stopIcon = require("../../assets/icons/stop.png");
 
+const events = [
+  TrackPlayerEvents.PLAYBACK_STATE,
+  TrackPlayerEvents.PLAYBACK_ERROR,
+];
+
 export function Player() {
   const [selectedChannel] = useContext(SelectedChannelContext);
 
   const [latestChannel, setLatestChannel] = useState(null);
-  const [isPlaying, setPlayingStatus] = useState(false);
+  const [playbackState, setPlaybackState] = useState(null);
 
-  const setupPlayer = async () => {
-    await TrackPlayer.setupPlayer({});
-    await TrackPlayer.updateOptions({
-      stopWithApp: true,
-      capabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_STOP],
-      compactCapabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_STOP,
-      ],
-    });
-  };
-
-  const play = async () => {
-    if (!selectedChannel) {
-      return;
+  useTrackPlayerEvents(events, (event) => {
+    if (event.type === TrackPlayerEvents.PLAYBACK_ERROR) {
+      console.warn("An error occurred while playing the current track.");
     }
-    const currentTrack = await TrackPlayer.getCurrentTrack();
-    if (!currentTrack) {
-      await TrackPlayer.add({
-        id: selectedChannel,
-        url: `https://ice5.somafm.com/${selectedChannel}-128-mp3`,
-        title: selectedChannel,
-        artist: selectedChannel,
-      });
-
-      await TrackPlayer.play();
-      setPlayingStatus(true);
+    if (event.type === TrackPlayerEvents.PLAYBACK_STATE) {
+      setPlaybackState(event.state);
     }
-  };
+  });
 
-  const stop = async () => {
-    await TrackPlayer.stop();
-    setPlayingStatus(false);
-  };
+  const [play, stop] = usePlayerControls(selectedChannel, (channel) =>
+    setLatestChannel(channel)
+  );
+
+  const isPlaying = playbackState && playbackState === STATE_PLAYING;
 
   const togglePlay = useCallback(() => {
     if (isPlaying) {
@@ -98,22 +88,22 @@ export function Player() {
     }
   }, [isPlaying, stop, play]);
 
-  useEffect(() => {
-    setupPlayer();
-  }, []);
+  usePlayerSetup();
 
   useEffect(() => {
-    if (!selectedChannel) {
-      return;
-    }
-    if (isPlaying && selectedChannel != latestChannel) {
+    if (
+      isPlaying &&
+      latestChannel &&
+      selectedChannel.$.id != latestChannel.$.id
+    ) {
       setLatestChannel(selectedChannel);
       play();
     }
-  }, [selectedChannel, isPlaying, setLatestChannel]);
+  }, [selectedChannel, isPlaying, setLatestChannel, latestChannel]);
 
   const icon = isPlaying ? stopIcon : playIcon;
   const { styledBtn, styledIcon } = getConditionalStyles(isPlaying);
+
   return (
     <TouchableHighlight onPress={togglePlay}>
       <View

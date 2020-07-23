@@ -44,7 +44,7 @@ export default function App() {
             <Route path="/player/:id">
               <Playlist />
             </Route>
-            <StatusBar barStyle="auto" />
+            <StatusBar backgroundColor="transparent" barStyle="default" />
             <BottomBar />
           </View>
         </SelectedChannelContext.Provider>

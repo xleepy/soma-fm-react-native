@@ -18,26 +18,24 @@ const styles = StyleSheet.create({
 
 export function Playlist() {
   const [selectedChannel] = useContext(SelectedChannelContext);
-  const channels = useContext(ChannelsContext);
-  const channel = channels.find((ch) => ch.$.id === selectedChannel);
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    if (channel) {
+    if (selectedChannel) {
       const {
         $: { id },
-      } = channel;
+      } = selectedChannel;
       fetchXML(songsUrl(id)).then(({ songs: { song } }) => {
         setSongs(song);
       });
     }
-  }, [channel]);
+  }, [selectedChannel]);
 
-  if (!channel) {
+  if (!selectedChannel) {
     return <Text style={styles.channelNotFound}>Channel not found</Text>;
   }
 
-  const { xlimage, title, largeimage, description } = channel;
+  const { xlimage, title, largeimage, description } = selectedChannel;
 
   return (
     <View style={{ flex: 1 }}>

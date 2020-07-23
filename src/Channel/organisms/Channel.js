@@ -26,26 +26,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export function Channel({
-  channel: {
-    title,
-    $: { id },
-    xlimage,
-    listeners,
-    description,
-  },
-}) {
+export function Channel({ channel }) {
   const [, setChannel] = useContext(SelectedChannelContext);
   const history = useHistory();
-  const redirectToPlayer = useCallback(
-    (channel) => () => {
-      setChannel(channel);
-      history.push(`player/${channel}`);
-    },
-    []
-  );
+  const redirectToPlayer = useCallback(() => {
+    setChannel(channel);
+    history.push(`player/${channel.$.id}`);
+  }, []);
+
+  const { title, xlimage, listeners, description } = channel;
   return (
-    <TouchableHighlight onPress={redirectToPlayer(id)}>
+    <TouchableHighlight onPress={redirectToPlayer}>
       <View style={styles.channelContainer}>
         <Image
           source={{
