@@ -32,6 +32,17 @@
 		4BBD6E74709340A19A5D3F84 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 648DDC0DF0DB4FFBA3A27F28 /* Montserrat-SemiBoldItalic.ttf */; };
 		CDCFECEC7939412FB9C6AB93 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A59A57846BD7475BB99056DF /* Montserrat-Thin.ttf */; };
 		E02974768AF446A283FE434D /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA7B801B1E6240EFAB105B34 /* Montserrat-ThinItalic.ttf */; };
+		AB0A58B769A14432B26A5D76 /* home-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 03001E72E680441FB555533A /* home-active.png */; };
+		C5329D6480A045C4B5EBDAD1 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA243C8DB7F4766BB08E0B0 /* home.png */; };
+		19375418D3874723B5DDA0F2 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 21763EB40B9B435AABF414E1 /* play.png */; };
+		19FB0D9D6F544BDB8A0F3A0D /* playlist-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DCD5F8260C44AB7B110F2CD /* playlist-active.png */; };
+		2074245C8CA445998520370D /* playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C452FEA0FD54FACB4392F32 /* playlist.png */; };
+		F8FC3151C2AF4BE59B10767D /* settings-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3EF851B41B4B7CB0039061 /* settings-active.png */; };
+		3794190F43044031932D3CFB /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A407CDC6DCA42F99E5E16AA /* settings.png */; };
+		A174152652924797A86CCB2A /* sleep-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A99C227B1F7492D8F09A469 /* sleep-active.png */; };
+		942ABD2DDEE74E69B6E9DC07 /* sleep.png in Resources */ = {isa = PBXBuildFile; fileRef = B4F0A69AF16B4899A10D9755 /* sleep.png */; };
+		48EBC281E7AF4DC4AE887401 /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FA9334286046C0BCD21C4F /* stop.png */; };
+		E56197CF8C1542CAAF0E9290 /* Splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 06216F17161045699DA15C09 /* Splash.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +79,17 @@
 		648DDC0DF0DB4FFBA3A27F28 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "Montserrat-SemiBoldItalic.ttf"; path = "../assets/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A59A57846BD7475BB99056DF /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; name = "Montserrat-Thin.ttf"; path = "../assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AA7B801B1E6240EFAB105B34 /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Montserrat-ThinItalic.ttf"; path = "../assets/fonts/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		03001E72E680441FB555533A /* home-active.png */ = {isa = PBXFileReference; name = "home-active.png"; path = "../assets/icons/home-active.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FFA243C8DB7F4766BB08E0B0 /* home.png */ = {isa = PBXFileReference; name = "home.png"; path = "../assets/icons/home.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		21763EB40B9B435AABF414E1 /* play.png */ = {isa = PBXFileReference; name = "play.png"; path = "../assets/icons/play.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7DCD5F8260C44AB7B110F2CD /* playlist-active.png */ = {isa = PBXFileReference; name = "playlist-active.png"; path = "../assets/icons/playlist-active.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7C452FEA0FD54FACB4392F32 /* playlist.png */ = {isa = PBXFileReference; name = "playlist.png"; path = "../assets/icons/playlist.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9B3EF851B41B4B7CB0039061 /* settings-active.png */ = {isa = PBXFileReference; name = "settings-active.png"; path = "../assets/icons/settings-active.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3A407CDC6DCA42F99E5E16AA /* settings.png */ = {isa = PBXFileReference; name = "settings.png"; path = "../assets/icons/settings.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9A99C227B1F7492D8F09A469 /* sleep-active.png */ = {isa = PBXFileReference; name = "sleep-active.png"; path = "../assets/icons/sleep-active.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B4F0A69AF16B4899A10D9755 /* sleep.png */ = {isa = PBXFileReference; name = "sleep.png"; path = "../assets/icons/sleep.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B0FA9334286046C0BCD21C4F /* stop.png */ = {isa = PBXFileReference; name = "stop.png"; path = "../assets/icons/stop.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		06216F17161045699DA15C09 /* Splash.png */ = {isa = PBXFileReference; name = "Splash.png"; path = "../assets/images/Splash.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +199,17 @@
 				648DDC0DF0DB4FFBA3A27F28 /* Montserrat-SemiBoldItalic.ttf */,
 				A59A57846BD7475BB99056DF /* Montserrat-Thin.ttf */,
 				AA7B801B1E6240EFAB105B34 /* Montserrat-ThinItalic.ttf */,
+				03001E72E680441FB555533A /* home-active.png */,
+				FFA243C8DB7F4766BB08E0B0 /* home.png */,
+				21763EB40B9B435AABF414E1 /* play.png */,
+				7DCD5F8260C44AB7B110F2CD /* playlist-active.png */,
+				7C452FEA0FD54FACB4392F32 /* playlist.png */,
+				9B3EF851B41B4B7CB0039061 /* settings-active.png */,
+				3A407CDC6DCA42F99E5E16AA /* settings.png */,
+				9A99C227B1F7492D8F09A469 /* sleep-active.png */,
+				B4F0A69AF16B4899A10D9755 /* sleep.png */,
+				B0FA9334286046C0BCD21C4F /* stop.png */,
+				06216F17161045699DA15C09 /* Splash.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -263,6 +296,17 @@
 				4BBD6E74709340A19A5D3F84 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				CDCFECEC7939412FB9C6AB93 /* Montserrat-Thin.ttf in Resources */,
 				E02974768AF446A283FE434D /* Montserrat-ThinItalic.ttf in Resources */,
+				AB0A58B769A14432B26A5D76 /* home-active.png in Resources */,
+				C5329D6480A045C4B5EBDAD1 /* home.png in Resources */,
+				19375418D3874723B5DDA0F2 /* play.png in Resources */,
+				19FB0D9D6F544BDB8A0F3A0D /* playlist-active.png in Resources */,
+				2074245C8CA445998520370D /* playlist.png in Resources */,
+				F8FC3151C2AF4BE59B10767D /* settings-active.png in Resources */,
+				3794190F43044031932D3CFB /* settings.png in Resources */,
+				A174152652924797A86CCB2A /* sleep-active.png in Resources */,
+				942ABD2DDEE74E69B6E9DC07 /* sleep.png in Resources */,
+				48EBC281E7AF4DC4AE887401 /* stop.png in Resources */,
+				E56197CF8C1542CAAF0E9290 /* Splash.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +325,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n../node_modules/expo-updates/scripts/create-manifest-ios.sh\n";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
