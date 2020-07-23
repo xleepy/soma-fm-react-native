@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Image, VirtualizedList } from 'react-native';
-import { Channel } from '../Channel/organisms/Channel';
-import { ChannelsContext } from '../App';
-import { ButtonRow } from './molecules/ButtonRow';
+import React, { useContext } from "react";
+import { View, Text, StyleSheet, Image, VirtualizedList } from "react-native";
+import { Channel } from "../Channel/organisms/Channel";
+import { ChannelsContext } from "../App";
+import { ButtonRow } from "./molecules/ButtonRow";
+import { useChannels } from "./hooks";
 
 const styles = StyleSheet.create({
   channelsContainer: {
@@ -10,13 +11,13 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 16,
-    color: '#FF0002',
+    color: "#FF0002",
     fontSize: 28,
     lineHeight: 34,
-    textAlign: 'center',
+    textAlign: "center",
   },
   stationsTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
     lineHeight: 22,
     marginBottom: 14,
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 export function Channels() {
-  const fetchedChannels = useContext(ChannelsContext);
+  const [fetchedChannels] = useChannels();
   return (
     <View style={styles.channelsContainer}>
       <Text style={styles.title}>Soma FM</Text>

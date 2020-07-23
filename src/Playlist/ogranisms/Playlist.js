@@ -4,6 +4,7 @@ import { fetchXML } from "../../utils";
 import { Header } from "../molecules/Header";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { ChannelsContext, SelectedChannelContext } from "../../App";
+import { Song } from "../molecules/Song";
 
 const songsUrl = (channel) => `https://somafm.com/songs/${channel}.xml`;
 
@@ -47,12 +48,8 @@ export function Playlist() {
       />
       {/* TODO: for now ugly list of songs, rewrite */}
       <ScrollView style={{ flex: 1, paddingTop: 16, marginBottom: 16 }}>
-        {songs.map(({ artist, album, title: songTitle }, idx) => (
-          <View key={`${artist[0]}-${songTitle[0]}-${idx}`}>
-            <Text
-              style={{ color: "#fff" }}
-            >{`${artist[0]}: ${songTitle[0]} - ${album[0]}`}</Text>
-          </View>
+        {songs.map((song, idx) => (
+          <Song key={idx} song={song} />
         ))}
       </ScrollView>
     </View>

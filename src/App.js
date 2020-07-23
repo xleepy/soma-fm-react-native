@@ -3,8 +3,10 @@ import { StyleSheet, View, StatusBar } from "react-native";
 import { NativeRouter, Route } from "react-router-native";
 import { Channels } from "./Channels/Channels";
 import { fetchXML } from "./utils";
-import { BottomBar } from "./BottomBar";
+import { BottomBar } from "./BottomBar/BottomBar";
 import { Playlist } from "./Playlist/ogranisms/Playlist";
+import SplashScreen from "react-native-splash-screen";
+import TrackPlayer from "react-native-track-player";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,39 +18,33 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ChannelsContext = React.createContext([]);
 export const SelectedChannelContext = React.createContext();
 
+TrackPlayer.registerPlaybackService(() => require("./Player/service.js"));
+
 export default function App() {
-  const [channels, setChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
 
   useEffect(() => {
-    fetchXML("https://somafm.com/channels.xml").then(
-      ({ channels: { channel } }) => {
-        setChannels(channel);
-      }
-    );
-  }, [setChannels]);
+    SplashScreen.hide();
+  }, []);
 
   return (
     <NativeRouter>
-      <ChannelsContext.Provider value={channels}>
-        <SelectedChannelContext.Provider
-          value={[selectedChannel, setSelectedChannel]}
-        >
-          <View style={styles.container}>
-            <Route exact path="/">
-              <Channels />
-            </Route>
-            <Route path="/player/:id">
-              <Playlist />
-            </Route>
-            <StatusBar backgroundColor="transparent" barStyle="default" />
-            <BottomBar />
-          </View>
-        </SelectedChannelContext.Provider>
-      </ChannelsContext.Provider>
+      <SelectedChannelContext.Provider
+        value={[selectedChannel, setSelectedChannel]}
+      >
+        <View style={styles.container}>
+          <Route exact path="/">
+            <Channels />
+          </Route>
+          <Route path="/player/:id">
+            <Playlist />
+          </Route>
+          <StatusBar backgroundColor="#000" barStyle="default" />
+          <BottomBar />
+        </View>
+      </SelectedChannelContext.Provider>
     </NativeRouter>
   );
 }

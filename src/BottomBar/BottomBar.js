@@ -1,9 +1,9 @@
 import React, { useCallback, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { IconButton } from "./Channels/atoms/IconButton";
+import { IconButton } from "../Channels/atoms/IconButton";
 import { useHistory, useLocation } from "react-router";
-import { Player } from "./Player/Player";
-import { SelectedChannelContext } from "./App";
+import { Player } from "../Player/Player";
+import { SelectedChannelContext } from "../App";
 
 const styles = StyleSheet.create({
   container: {

@@ -4,14 +4,12 @@ import { useEffect, useCallback } from "react";
 async function setupPlayer() {
   await TrackPlayer.setupPlayer({});
   await TrackPlayer.updateOptions({
-    stopWithApp: true,
     capabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_STOP],
     compactCapabilities: [
       TrackPlayer.CAPABILITY_PLAY,
       TrackPlayer.CAPABILITY_STOP,
     ],
   });
-  TrackPlayer.registerPlaybackService(() => require("./service.js"));
 }
 
 export function usePlayerSetup() {
@@ -32,10 +30,11 @@ export function usePlayerControls(selectedChannel, callback) {
       const {
         title,
         $: { id },
+        xlimage,
         description,
+        genre,
       } = selectedChannel;
       const currentTrack = await TrackPlayer.getCurrentTrack();
-      currentTrack && console.log("current id", currentTrack.id, id);
       if (currentTrack && currentTrack.id != id) {
         await TrackPlayer.stop();
         await TrackPlayer.reset();
@@ -44,7 +43,9 @@ export function usePlayerControls(selectedChannel, callback) {
         id,
         url: `https://ice5.somafm.com/${id}-128-mp3`,
         title: title[0],
+        artwork: xlimage[0],
         artist: description[0],
+        genre: genre[0],
       });
 
       await TrackPlayer.play();

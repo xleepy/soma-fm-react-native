@@ -91,12 +91,10 @@ export function Player() {
   usePlayerSetup();
 
   useEffect(() => {
-    if (
-      isPlaying &&
-      latestChannel &&
-      selectedChannel.$.id != latestChannel.$.id
-    ) {
-      setLatestChannel(selectedChannel);
+    if (!selectedChannel || !latestChannel) {
+      return;
+    }
+    if (isPlaying && selectedChannel.$.id != latestChannel.$.id) {
       play();
     }
   }, [selectedChannel, isPlaying, setLatestChannel, latestChannel]);
