@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory } from "react-router";
-import { useCallback } from "react";
 import { TouchableHighlight, View, Image, StyleSheet } from "react-native";
 import { TextContent } from "../molecules/TextContent";
-import { SelectedChannelContext } from "../../App";
+import { useChannelSelect } from "../../utils";
 
 const styles = StyleSheet.create({
   trackImage: {
@@ -32,16 +31,14 @@ const styles = StyleSheet.create({
 const favoriteIcon = require("../../../assets/icons/favorite-inactive.png");
 
 export function Channel({ channel }) {
-  const [, setChannel] = useContext(SelectedChannelContext);
   const history = useHistory();
-  const redirectToPlayer = useCallback(() => {
-    setChannel(channel);
-    history.push(`player/${channel.$.id}`);
-  }, []);
+  const selectChannel = useChannelSelect(channel, () =>
+    history.push(`/player/${channel.$.id}`)
+  );
 
   const { title, xlimage, listeners, description } = channel;
   return (
-    <TouchableHighlight onPress={redirectToPlayer}>
+    <TouchableHighlight onPress={selectChannel}>
       <View style={styles.channelContainer}>
         <Image
           source={{
