@@ -1,5 +1,6 @@
 import TrackPlayer from "react-native-track-player";
 import { useEffect, useCallback } from "react";
+import { addToRecentyPlayed } from "../RecentlyPlayed/utils";
 
 async function setupPlayer() {
   await TrackPlayer.setupPlayer({});
@@ -50,6 +51,7 @@ export function usePlayerControls(selectedChannel, callback) {
         });
 
         await TrackPlayer.play();
+        await addToRecentyPlayed(selectedChannel);
         callback(selectedChannel);
       } catch (err) {
         console.log(err);

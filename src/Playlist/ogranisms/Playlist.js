@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { fetchXML } from "../../utils";
 import { Header } from "../molecules/Header";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
-import { ChannelsContext, SelectedChannelContext } from "../../App";
+import { SelectedChannelContext } from "../../App";
 import { Song } from "../molecules/Song";
 
 const songsUrl = (channel) => `https://somafm.com/songs/${channel}.xml`;

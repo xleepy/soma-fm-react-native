@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, StatusBar } from "react-native";
 import { NativeRouter, Route } from "react-router-native";
 import { Channels } from "./Channels/Channels";
-import { fetchXML } from "./utils";
 import { BottomBar } from "./BottomBar/BottomBar";
-import { Playlist } from "./Playlist/ogranisms/Playlist";
 import SplashScreen from "react-native-splash-screen";
 import TrackPlayer from "react-native-track-player";
+import { Playlist } from "./Playlist/ogranisms/Playlist";
 
 const styles = StyleSheet.create({
   container: {
@@ -41,11 +40,7 @@ export default function App() {
           <Route path="/player/:id">
             <Playlist />
           </Route>
-          <StatusBar
-            backgroundColor="transparent"
-            barStyle="default"
-            translucent
-          />
+          <StatusBar backgroundColor="transparent" translucent />
           <BottomBar />
         </View>
       </SelectedChannelContext.Provider>

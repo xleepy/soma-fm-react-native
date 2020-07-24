@@ -1,13 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router";
 import { useCallback } from "react";
-import {
-  TouchableHighlight,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-} from "react-native";
+import { TouchableHighlight, View, Image, StyleSheet } from "react-native";
 import { TextContent } from "../molecules/TextContent";
 import { SelectedChannelContext } from "../../App";
 
@@ -24,7 +18,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flex: 1,
   },
+  absoluteContainer: {
+    position: "absolute",
+    right: 16,
+    top: 0,
+  },
+  favoriteBtn: {
+    width: 18,
+    height: 18,
+  },
 });
+
+const favoriteIcon = require("../../../assets/icons/favorite-inactive.png");
 
 export function Channel({ channel }) {
   const [, setChannel] = useContext(SelectedChannelContext);
@@ -49,6 +54,14 @@ export function Channel({ channel }) {
           listeners={listeners[0]}
           description={description[0]}
         />
+        <View style={styles.absoluteContainer}>
+          <TouchableHighlight
+            onPress={(event) => event.preventDefault()}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <Image style={styles.favoriteBtn} source={favoriteIcon} />
+          </TouchableHighlight>
+        </View>
       </View>
     </TouchableHighlight>
   );

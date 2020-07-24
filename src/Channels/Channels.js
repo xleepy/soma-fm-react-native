@@ -1,8 +1,17 @@
-import React from "react";
-import { View, Text, StyleSheet, VirtualizedList } from "react-native";
+import React, { useCallback } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  VirtualizedList,
+  SectionList,
+} from "react-native";
 import { Channel } from "../Channel/organisms/Channel";
 import { ButtonRow } from "./molecules/ButtonRow";
-import { useChannels } from "./hooks";
+import { useChannels, useSortedChannels } from "./hooks";
+import { RecentlyPlayed } from "../RecentlyPlayed/organisms/RecentlyPlayed";
+import { Sections } from "./molecules/Sections";
+import { AllChannels } from "./molecules/AllChannels";
 
 const styles = StyleSheet.create({
   channelsContainer: {
@@ -24,21 +33,31 @@ const styles = StyleSheet.create({
 });
 
 export function Channels() {
-  const [fetchedChannels] = useChannels();
+  const channels = useChannels();
+  const [{ type, data }, dispatch] = useSortedChannels(channels);
+  const handleAllPress = useCallback(() => {
+    dispatch({ type: "all", data: channels });
+  }, [channels]);
+  const handleByGenrePress = useCallback(() => {
+    dispatch({ type: "genre", data: channels });
+  }, [channels]);
+
+  const hanleByPopularityPress = useCallback(() => {
+    dispatch({ type: "popularity", data: channels });
+  }, [channels]);
   return (
     <View style={styles.channelsContainer}>
       <Text style={styles.title}>Soma FM</Text>
+      <RecentlyPlayed />
       <Text style={styles.stationsTitle}>Stations</Text>
-      <ButtonRow />
-      <VirtualizedList
-        data={fetchedChannels}
-        keyExtractor={(item) => item.$.id}
-        getItem={(channels, idx) => channels[idx]}
-        getItemCount={(channels) => channels.length}
-        renderItem={({ item }) => {
-          return <Channel key={item.$.id} channel={item} />;
-        }}
+      <ButtonRow
+        currentType={type}
+        onAllPress={handleAllPress}
+        onGengrePress={handleByGenrePress}
+        onByPopularityPress={hanleByPopularityPress}
       />
+      {type == "genre" && <Sections data={data} />}
+      {type != "genre" && <AllChannels data={data} />}
     </View>
   );
 }
