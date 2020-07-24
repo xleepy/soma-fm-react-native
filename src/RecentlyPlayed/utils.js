@@ -9,7 +9,7 @@ export async function getRecentlyPlayed() {
   }
 }
 
-export async function addToRecentyPlayed(channel) {
+export async function addToRecentlyPlayed(channel) {
   const items = await getRecentlyPlayed();
   const isPlayed = items.some((ch) => ch.$.id == channel.$.id);
   if (isPlayed) {

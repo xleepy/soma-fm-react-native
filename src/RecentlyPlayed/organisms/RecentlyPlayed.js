@@ -4,29 +4,6 @@ import { Title } from "../atoms/Title";
 import { RecentlyPlayedChannel } from "../molecules/RecentlyPlayedChannel";
 import { getRecentlyPlayed } from "../utils";
 
-const DATA = [
-  {
-    $: { id: "bagel" },
-    title: ["Bagel Radio"],
-    image: ["https://api.somafm.com/img/bagel120.png"],
-  },
-  {
-    $: { id: "indiepop" },
-    title: ["Indie Pop Rocks"],
-    image: ["https://api.somafm.com/img/indychick.jpg"],
-  },
-  {
-    $: { id: "beatblender" },
-    title: ["Beat Blender"],
-    image: ["https://api.somafm.com/img/blender120.png"],
-  },
-  {
-    $: { id: "bootliquor" },
-    title: ["Boot Liquor"],
-    image: ["https://api.somafm.com/img/bootliquor120.jpg"],
-  },
-];
-
 const styles = StyleSheet.create({
   container: {
     marginBottom: 18,
