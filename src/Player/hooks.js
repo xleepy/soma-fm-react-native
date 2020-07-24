@@ -34,22 +34,26 @@ export function usePlayerControls(selectedChannel, callback) {
         description,
         genre,
       } = selectedChannel;
-      const currentTrack = await TrackPlayer.getCurrentTrack();
-      if (currentTrack && currentTrack.id != id) {
-        await TrackPlayer.stop();
-        await TrackPlayer.reset();
-      }
-      await TrackPlayer.add({
-        id,
-        url: `https://ice5.somafm.com/${id}-128-mp3`,
-        title: title[0],
-        artwork: xlimage[0],
-        artist: description[0],
-        genre: genre[0],
-      });
+      try {
+        const currentTrack = await TrackPlayer.getCurrentTrack();
+        if (currentTrack && currentTrack.id != id) {
+          await TrackPlayer.stop();
+          await TrackPlayer.reset();
+        }
+        await TrackPlayer.add({
+          id,
+          url: `https://ice5.somafm.com/${id}-128-mp3`,
+          title: title[0],
+          artwork: xlimage[0],
+          artist: description[0],
+          genre: genre[0],
+        });
 
-      await TrackPlayer.play();
-      callback(selectedChannel);
+        await TrackPlayer.play();
+        callback(selectedChannel);
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, [selectedChannel]);
 

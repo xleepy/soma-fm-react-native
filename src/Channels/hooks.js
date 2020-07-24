@@ -20,33 +20,23 @@ async function getCachedChannels() {
   }
 }
 
+async function fetchChannels() {
+  const cachedChannels = await getCachedChannels();
+  if (!cachedChannels || cachedChannels.length == 0) {
+    return fetchXML("https://somafm.com/channels.xml").then(
+      ({ channels: { channel } }) => {
+        cacheChannels(channel);
+        return channel;
+      }
+    );
+  }
+  return Promise.resolve(cachedChannels);
+}
+
 export function useChannels() {
   const [channels, setChannels] = useState([]);
   useEffect(() => {
-    let canceled = false;
-    if (channels.length > 0) {
-      return;
-    }
-    (async function () {
-      const cachedChannels = await getCachedChannels();
-      console.log(cachedChannels);
-      if (!cachedChannels || cachedChannels.length == 0) {
-        const {
-          channels: { channel },
-        } = await fetchXML("https://somafm.com/channels.xml");
-        if (!canceled) {
-          setChannels(channel);
-          cacheChannels(channel);
-        }
-      } else {
-        if (!canceled) {
-          setChannels(cachedChannels);
-        }
-      }
-    })();
-    return () => {
-      canceled = true;
-    };
+    fetchChannels().then(setChannels);
   }, []);
   // TODO: sorting modes, and callbacks
   return [channels];

@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
-import { View, Text, StyleSheet, Image, VirtualizedList } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, VirtualizedList } from "react-native";
 import { Channel } from "../Channel/organisms/Channel";
-import { ChannelsContext } from "../App";
 import { ButtonRow } from "./molecules/ButtonRow";
 import { useChannels } from "./hooks";
 
