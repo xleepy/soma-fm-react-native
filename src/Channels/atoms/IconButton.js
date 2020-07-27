@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableHighlight } from "react-native-gesture-handler";
-import { Image, StyleSheet, View } from "react-native";
+import styled from "styled-components";
 
 const iconsMap = {
   home: {
@@ -21,27 +21,26 @@ const iconsMap = {
   },
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: 75,
-    height: 55,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
-});
+const IconContainer = styled.View`
+  width: 75px;
+  height: 55px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Icon = styled.Image`
+  width: 24px;
+  height: 24px;
+`;
 
 export function IconButton({ iconType, onPress, isActive }) {
   const { inactive, active } = iconsMap[iconType];
   const icon = isActive ? active : inactive;
   return (
     <TouchableHighlight onPress={onPress}>
-      <View style={styles.container}>
-        <Image style={styles.icon} source={icon} />
-      </View>
+      <IconContainer>
+        <Icon source={icon} />
+      </IconContainer>
     </TouchableHighlight>
   );
 }

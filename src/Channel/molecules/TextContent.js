@@ -1,34 +1,33 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    flexShrink: 1,
-  },
-  title: {
-    color: "#fff",
-    fontFamily: "Montserrat-Bold",
-    fontSize: 14,
-    lineHeight: 17,
-    marginBottom: 2,
-  },
-  text: {
-    fontFamily: "Montserrat-SemiBold",
-    color: "#999999",
-    fontSize: 12,
-    lineHeight: 15,
-    marginBottom: 4,
-    includeFontPadding: true,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  flex-shrink: 1;
+`;
+
+const Title = styled.Text`
+  color: #fff;
+  font-family: "Montserrat-Bold";
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 2px;
+`;
+
+const StyledText = styled.Text`
+  font-family: "Montserrat-SemiBold";
+  color: #999999;
+  font-size: 12px;
+  line-height: 15px;
+  margin-bottom: 4px;
+`;
 
 export function TextContent({ title, listeners, description }) {
   return (
-    <View style={styles.contentContainer}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.text}>{`Listeners: ${listeners}`}</Text>
-      <Text style={styles.text}>{description}</Text>
-    </View>
+    <Container>
+      <Title>{title}</Title>
+      <StyledText>{`Listeners: ${listeners}`}</StyledText>
+      <StyledText>{description}</StyledText>
+    </Container>
   );
 }

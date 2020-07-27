@@ -1,32 +1,33 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { TouchableHighlight, View, Image, StyleSheet } from "react-native";
+import { TouchableHighlight } from "react-native";
 import { TextContent } from "../molecules/TextContent";
 import { useChannelSelect } from "../../utils";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  trackImage: {
-    width: 62,
-    height: 62,
-    marginRight: 14,
-    borderRadius: 8,
-  },
-  channelContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-    flex: 1,
-  },
-  absoluteContainer: {
-    position: "absolute",
-    right: 16,
-    top: 0,
-  },
-  favoriteBtn: {
-    width: 18,
-    height: 18,
-  },
-});
+const TrackImage = styled.Image`
+  width: 62px;
+  height: 62px;
+  margin-right: 14px;
+  border-radius: 8px;
+`;
+
+const ChannelContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const AbsoluteContainer = styled.View`
+  position: absolute;
+  right: 16px;
+  top: 0;
+`;
+
+const FavoriteIcon = styled.Image`
+  width: 18px;
+  height: 18px;
+`;
 
 const favoriteIcon = require("../../../assets/icons/favorite-inactive.png");
 
@@ -39,27 +40,26 @@ export function Channel({ channel }) {
   const { title, xlimage, listeners, description } = channel;
   return (
     <TouchableHighlight onPress={selectChannel}>
-      <View style={styles.channelContainer}>
-        <Image
+      <ChannelContainer>
+        <TrackImage
           source={{
             uri: xlimage[0],
           }}
-          style={styles.trackImage}
         />
         <TextContent
           title={title[0]}
           listeners={listeners[0]}
           description={description[0]}
         />
-        <View style={styles.absoluteContainer}>
+        <AbsoluteContainer>
           <TouchableHighlight
             onPress={(event) => event.preventDefault()}
             style={{ width: "100%", height: "100%" }}
           >
-            <Image style={styles.favoriteBtn} source={favoriteIcon} />
+            <FavoriteIcon source={favoriteIcon} />
           </TouchableHighlight>
-        </View>
-      </View>
+        </AbsoluteContainer>
+      </ChannelContainer>
     </TouchableHighlight>
   );
 }

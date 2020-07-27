@@ -67,7 +67,7 @@ function reducer(state, action) {
     case "all": {
       return {
         type: "all",
-        data: action.data.slice(),
+        data: action.data,
       };
     }
     case "genre":
@@ -95,5 +95,7 @@ export function useSortedChannels(channels) {
     dispatch({ type: "all", data: channels });
   }, [channels]);
 
-  return [sortedChannels, dispatch];
+  const channelsDispatch = (type) => dispatch({ type, data: channels });
+
+  return [sortedChannels, channelsDispatch];
 }

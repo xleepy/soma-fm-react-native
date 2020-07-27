@@ -1,29 +1,32 @@
 import React from "react";
-import { SectionList, Text, StyleSheet } from "react-native";
+import { SectionList } from "react-native";
 import { Channel } from "../../Channel/organisms/Channel";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  sectionHeader: {
-    color: "#fff",
-    textTransform: "capitalize",
-    fontSize: 16,
-    fontFamily: "Montserrat-Bold",
-    marginBottom: 16,
-    letterSpacing: 1,
-  },
-});
+const SectionHeader = styled.Text`
+  color: #fff;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-family: "Montserrat-Bold";
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+`;
+
+function renderItem({ item }) {
+  return <Channel key={item.$.id} channel={item} />;
+}
+
+function renderSectionHeader({ section: { title } }) {
+  return <SectionHeader>{title}</SectionHeader>;
+}
 
 export function Sections({ data }) {
   return (
     <SectionList
       sections={data}
       keyExtractor={(item) => item.$.id}
-      renderItem={({ item }) => {
-        return <Channel key={item.$.id} channel={item} />;
-      }}
-      renderSectionHeader={({ section: { title } }) => {
-        return <Text style={styles.sectionHeader}>{title}</Text>;
-      }}
+      renderItem={renderItem}
+      renderSectionHeader={renderSectionHeader}
     />
   );
 }

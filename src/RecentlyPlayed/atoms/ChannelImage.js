@@ -1,19 +1,16 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 4,
-    marginBottom: 4,
-  },
-});
+const StyledImage = styled.Image`
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+`;
 
 export function ChannelImage({ uri }) {
   return (
-    <Image
-      style={styles.image}
+    <StyledImage
       source={{
         uri,
       }}

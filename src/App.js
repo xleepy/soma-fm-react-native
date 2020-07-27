@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { NativeRouter, Route } from "react-router-native";
 import { Channels } from "./Channels/Channels";
 import { BottomBar } from "./BottomBar/BottomBar";
 import SplashScreen from "react-native-splash-screen";
 import TrackPlayer from "react-native-track-player";
 import { Playlist } from "./Playlist/ogranisms/Playlist";
+import "intl";
+import "intl/locale-data/jsonp/en";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#000000",
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-});
+const AppContainer = styled.View`
+  background-color: #000;
+  flex: 1;
+  justify-content: center;
+  padding: 16px 16px 0 16px;
+`;
 
 export const SelectedChannelContext = React.createContext();
 
@@ -33,7 +33,7 @@ export default function App() {
       <SelectedChannelContext.Provider
         value={[selectedChannel, setSelectedChannel]}
       >
-        <View style={styles.container}>
+        <AppContainer>
           <Route exact path="/">
             <Channels />
           </Route>
@@ -42,7 +42,7 @@ export default function App() {
           </Route>
           <StatusBar backgroundColor="transparent" translucent />
           <BottomBar />
-        </View>
+        </AppContainer>
       </SelectedChannelContext.Provider>
     </NativeRouter>
   );

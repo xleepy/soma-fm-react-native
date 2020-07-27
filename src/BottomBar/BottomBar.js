@@ -1,36 +1,34 @@
 import React, { useCallback, useContext } from "react";
-import { View, StyleSheet, Text } from "react-native";
 import { IconButton } from "../Channels/atoms/IconButton";
 import { useHistory, useLocation } from "react-router";
 import { Player } from "../Player/Player";
 import { SelectedChannelContext } from "../App";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  container: {
-    height: 56,
-    marginHorizontal: -16,
-    flexDirection: "row",
-    backgroundColor: "#000",
-    alignItems: "center",
-    justifyContent: "space-around",
-    position: "relative",
-    borderColor: "#FF0000",
-    borderStyle: "solid",
-    borderTopWidth: 1,
-  },
-  absoluteBtn: {
-    position: "absolute",
-    top: -17,
-    left: "45%",
-  },
-  btnContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingHorizontal: 20,
-    alignItems: "center",
-  },
-});
+const Container = styled.View`
+  height: 56px;
+  margin: 0 -16px;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  border-color: #f00;
+  border-style: solid;
+  border-top-width: 1px;
+`;
+
+const ButtonsContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 20px;
+  align-items: center;
+`;
+
+const AbsoluteBtnContainer = styled.View`
+  position: absolute;
+  left: 45%;
+  top: -20px;
+`;
 
 export function BottomBar() {
   const [selectedChannel] = useContext(SelectedChannelContext);
@@ -50,8 +48,8 @@ export function BottomBar() {
   const isPlaylistActive = pathname.includes("/player/");
 
   return (
-    <View style={styles.container}>
-      <View style={styles.btnContainer}>
+    <Container>
+      <ButtonsContainer>
         <IconButton
           isActive={isHomeActive}
           onPress={navigateToHome}
@@ -62,14 +60,14 @@ export function BottomBar() {
           onPress={navigateToPlayer}
           iconType="playlist"
         />
-      </View>
-      <View style={styles.btnContainer}>
+      </ButtonsContainer>
+      <ButtonsContainer>
         <IconButton iconType="settings" />
         <IconButton iconType="sleep" />
-      </View>
-      <View style={styles.absoluteBtn}>
+      </ButtonsContainer>
+      <AbsoluteBtnContainer>
         <Player />
-      </View>
-    </View>
+      </AbsoluteBtnContainer>
+    </Container>
   );
 }

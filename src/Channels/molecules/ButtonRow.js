@@ -1,39 +1,44 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useCallback } from "react";
 import { Button } from "../atoms/Button";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginBottom: 16,
-  },
-});
+const Container = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  margin-bottom: 10px;
+`;
 
-export function ButtonRow({
-  currentType,
-  onAllPress,
-  onGengrePress,
-  onByPopularityPress,
-}) {
+export function ButtonRow({ currentType, dispatch }) {
+  const handleAllPress = useCallback(() => {
+    dispatch("all");
+  }, [dispatch]);
+
+  const handleByGenrePress = useCallback(() => {
+    dispatch("genre");
+  }, [dispatch]);
+
+  const hanleByPopularityPress = useCallback(() => {
+    dispatch("popularity");
+  }, [dispatch]);
   return (
-    <View style={styles.row}>
+    <Container>
       <Button label="Favourite" />
       <Button
         isActive={currentType == "all"}
-        onPress={onAllPress}
+        onPress={handleAllPress}
         label="All"
       />
       <Button
         isActive={currentType == "genre"}
-        onPress={onGengrePress}
+        onPress={handleByGenrePress}
         label="By genre"
       />
       <Button
         isActive={currentType == "popularity"}
-        onPress={onByPopularityPress}
+        onPress={hanleByPopularityPress}
         label="By Popularity"
       />
-    </View>
+    </Container>
   );
 }

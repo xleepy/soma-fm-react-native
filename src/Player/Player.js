@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
-import { View, Image, StyleSheet } from "react-native";
 
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { SelectedChannelContext } from "../App";
@@ -9,50 +8,27 @@ import {
   STATE_PLAYING,
 } from "react-native-track-player";
 import { usePlayerSetup, usePlayerControls } from "./hooks";
-
-const styles = StyleSheet.create({
-  btn: {
-    padding: 5,
-    borderRadius: 9999,
-    borderWidth: 1,
-    width: 50,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#000",
-  },
-  btnPlay: {
-    borderColor: "#fff",
-  },
-  btnStop: {
-    borderColor: "#FF0000",
-  },
-  icon: {
-    height: 18,
-  },
-  iconPlay: {
-    width: 13,
-  },
-  iconStop: {
-    width: 18,
-  },
-});
-
-function getConditionalStyles(isPlaying) {
-  if (isPlaying) {
-    return {
-      styledBtn: styles.btnStop,
-      styledIcon: styles.iconStop,
-    };
-  }
-  return {
-    styledBtn: styles.btnPlay,
-    styledIcon: styles.iconPlay,
-  };
-}
+import styled from "styled-components";
 
 const playIcon = require("../../assets/icons/play.png");
 const stopIcon = require("../../assets/icons/stop.png");
+
+const PlayContainer = styled.View`
+  padding: 5px;
+  border-radius: 100px;
+  border-width: 1px;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  border-color: ${({ isPlaying }) => (isPlaying ? "#ff0000" : "#fff")};
+`;
+
+const Icon = styled.Image`
+  height: 18px;
+  width: ${({ isPlaying }) => (isPlaying ? "18px" : "13px")};
+`;
 
 const events = [
   TrackPlayerEvents.PLAYBACK_STATE,
@@ -84,6 +60,7 @@ export function Player() {
     if (isPlaying) {
       stop();
     } else {
+      console.log("playing");
       play();
     }
   }, [isPlaying, stop, play]);
@@ -100,24 +77,12 @@ export function Player() {
   }, [selectedChannel, isPlaying, setLatestChannel, latestChannel]);
 
   const icon = isPlaying ? stopIcon : playIcon;
-  const { styledBtn, styledIcon } = getConditionalStyles(isPlaying);
 
   return (
     <TouchableHighlight onPress={togglePlay}>
-      <View
-        style={{
-          ...styles.btn,
-          ...styledBtn,
-        }}
-      >
-        <Image
-          style={{
-            ...styles.icon,
-            ...styledIcon,
-          }}
-          source={icon}
-        />
-      </View>
+      <PlayContainer isPlaying={isPlaying}>
+        <Icon isPlaying={isPlaying} source={icon} />
+      </PlayContainer>
     </TouchableHighlight>
   );
 }

@@ -1,16 +1,21 @@
 import React from "react";
-import { View, StyleSheet, TouchableHighlight } from "react-native";
+import { TouchableHighlight } from "react-native";
 import { ChannelImage } from "../atoms/ChannelImage";
-import { ChannelName } from "../atoms/ChannelName";
 import { useHistory } from "react-router";
 import { useChannelSelect } from "../../utils";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    marginRight: 14,
-  },
-});
+const Container = styled.View`
+  flex-direction: column;
+  margin-right: 14px;
+`;
+
+export const ChannelName = styled.Text`
+  font-family: "Montserrat-Bold";
+  font-weight: bold;
+  font-size: 13px;
+  color: #fff;
+`;
 
 export function RecentlyPlayedChannel({ channel }) {
   const { image, title } = channel;
@@ -20,10 +25,10 @@ export function RecentlyPlayedChannel({ channel }) {
   );
   return (
     <TouchableHighlight onPress={selectChannel}>
-      <View style={styles.container}>
+      <Container>
         <ChannelImage uri={image[0]} />
-        <ChannelName name={title[0]} />
-      </View>
+        <ChannelName>{title[0]}</ChannelName>
+      </Container>
     </TouchableHighlight>
   );
 }

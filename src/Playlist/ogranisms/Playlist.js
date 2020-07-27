@@ -47,7 +47,7 @@ export function Playlist() {
         title={title[0]}
       />
       {/* TODO: for now ugly list of songs, rewrite */}
-      <ScrollView style={{ flex: 1, paddingTop: 16, marginBottom: 16 }}>
+      <ScrollView style={{ flex: 1, marginVertical: 10, width: "100%" }}>
         {songs.map((song, idx) => (
           <Song key={idx} song={song} />
         ))}
