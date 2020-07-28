@@ -6,12 +6,13 @@ export async function getRecentlyPlayed() {
     return recentlyPlayedItems ? JSON.parse(recentlyPlayedItems) : [];
   } catch (err) {
     console.warn(err);
+    return [];
   }
 }
 
 export async function addToRecentlyPlayed(channel) {
   const items = await getRecentlyPlayed();
-  const isPlayed = items.some((ch) => ch.$.id == channel.$.id);
+  const isPlayed = items.some((ch) => ch.$.id === channel.$.id);
   if (isPlayed) {
     return;
   }

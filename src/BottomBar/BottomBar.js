@@ -44,7 +44,7 @@ export function BottomBar() {
     }
   }, [selectedChannel, pathname]);
 
-  const isHomeActive = pathname.length == 1 && pathname.startsWith("/");
+  const isHomeActive = pathname.length === 1 && pathname.startsWith("/");
   const isPlaylistActive = pathname.includes("/player/");
 
   return (

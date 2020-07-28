@@ -24,7 +24,7 @@ export function RecentlyPlayed() {
 
   const renderItem = ({ item }) => <RecentlyPlayedChannel channel={item} />;
 
-  return items.length == 0 ? null : (
+  return items.length === 0 ? null : (
     <Container>
       <Title>Recently Played</Title>
       <FlatList

@@ -33,8 +33,8 @@ export function Channels() {
       <RecentlyPlayed />
       <StationsTitle>Stations</StationsTitle>
       <ButtonRow currentType={type} dispatch={dispatch} />
-      {type == "genre" && <Sections data={data} />}
-      {type != "genre" && <AllChannels data={data} />}
+      {type === "genre" && <Sections data={data} />}
+      {type !== "genre" && <AllChannels data={data} />}
     </Container>
   );
 }

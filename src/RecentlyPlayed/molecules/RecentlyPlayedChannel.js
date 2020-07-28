@@ -1,8 +1,7 @@
 import React from "react";
 import { TouchableHighlight } from "react-native";
 import { ChannelImage } from "../atoms/ChannelImage";
-import { useHistory } from "react-router";
-import { useChannelSelect } from "../../utils";
+import { useSelectChannelAndRedirect } from "../../utils";
 import styled from "styled-components";
 
 const Container = styled.View`
@@ -19,10 +18,7 @@ export const ChannelName = styled.Text`
 
 export function RecentlyPlayedChannel({ channel }) {
   const { image, title } = channel;
-  const history = useHistory();
-  const selectChannel = useChannelSelect(channel, () =>
-    history.push(`/player/${channel.$.id}`)
-  );
+  const selectChannel = useSelectChannelAndRedirect(channel);
   return (
     <TouchableHighlight onPress={selectChannel}>
       <Container>

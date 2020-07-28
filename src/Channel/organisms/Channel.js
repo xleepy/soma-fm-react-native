@@ -1,8 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router";
 import { TouchableHighlight } from "react-native";
 import { TextContent } from "../molecules/TextContent";
-import { useChannelSelect } from "../../utils";
+import { useSelectChannelAndRedirect } from "../../utils";
 import styled from "styled-components";
 
 const TrackImage = styled.Image`
@@ -32,10 +31,7 @@ const FavoriteIcon = styled.Image`
 const favoriteIcon = require("../../../assets/icons/favorite-inactive.png");
 
 export function Channel({ channel }) {
-  const history = useHistory();
-  const selectChannel = useChannelSelect(channel, () =>
-    history.push(`/player/${channel.$.id}`)
-  );
+  const selectChannel = useSelectChannelAndRedirect(channel);
 
   const { title, xlimage, listeners, description } = channel;
   return (

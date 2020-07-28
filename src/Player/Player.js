@@ -60,7 +60,6 @@ export function Player() {
     if (isPlaying) {
       stop();
     } else {
-      console.log("playing");
       play();
     }
   }, [isPlaying, stop, play]);
@@ -71,7 +70,7 @@ export function Player() {
     if (!selectedChannel || !latestChannel) {
       return;
     }
-    if (isPlaying && selectedChannel.$.id != latestChannel.$.id) {
+    if (isPlaying && selectedChannel.$.id !== latestChannel.$.id) {
       play();
     }
   }, [selectedChannel, isPlaying, setLatestChannel, latestChannel]);

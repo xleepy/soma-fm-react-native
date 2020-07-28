@@ -1,16 +1,16 @@
 import { View } from "react-native";
 import React from "react";
-import { StyleSheet, Image } from "react-native";
+import { Image } from "react-native";
 import { SongText } from "../atoms/SongText";
 import "intl";
 import "intl/locale-data/jsonp/en";
+import styled from "styled-components";
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    paddingHorizontal: 14,
-  },
-});
+// TODO: move to generic components
+const ContainerRow = styled.View`
+  flex-direction: row;
+  padding: 0 14px;
+`;
 
 const numberFormatter = new Intl.NumberFormat("en-US", {
   minimumIntegerDigits: 2,
@@ -19,7 +19,7 @@ const numberFormatter = new Intl.NumberFormat("en-US", {
 const formatNumber = (number) => numberFormatter.format(number);
 
 function getFormattedDateFromTimestamp(timestamp) {
-  const parsedDate = new Date(parseInt(timestamp) * 1000);
+  const parsedDate = new Date(Number(timestamp) * 1000);
   return `${formatNumber(parsedDate.getHours())}:${formatNumber(
     parsedDate.getMinutes()
   )}`;
@@ -28,7 +28,7 @@ function getFormattedDateFromTimestamp(timestamp) {
 export function Song({ song: { artist, title, date } }) {
   const formattedDate = getFormattedDateFromTimestamp(date[0]);
   return (
-    <View style={styles.row}>
+    <ContainerRow>
       <View style={{ flex: 1, flexShrink: 1, paddingRight: 10 }}>
         <SongText>{title[0]}</SongText>
         <SongText>{artist[0]}</SongText>
@@ -49,6 +49,6 @@ export function Song({ song: { artist, title, date } }) {
           source={require("../../../assets/icons/dots.png")}
         />
       </View>
-    </View>
+    </ContainerRow>
   );
 }

@@ -2,20 +2,23 @@ import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { fetchXML } from "../../utils";
 import { Header } from "../molecules/Header";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import { ScrollView, View } from "react-native";
 import { SelectedChannelContext } from "../../App";
 import { Song } from "../molecules/Song";
+import styled from "styled-components";
 
 const songsUrl = (channel) => `https://somafm.com/songs/${channel}.xml`;
 
-const styles = StyleSheet.create({
-  channelNotFound: {
-    color: "#FF0002",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const ChannelNotFound = styled.Text`
+  color: #ff0002;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Container = styled.View`
+  flex: 1;
+`;
 
 export function Playlist() {
   const [selectedChannel] = useContext(SelectedChannelContext);
@@ -33,13 +36,13 @@ export function Playlist() {
   }, [selectedChannel]);
 
   if (!selectedChannel) {
-    return <Text style={styles.channelNotFound}>Channel not found</Text>;
+    return <ChannelNotFound>Channel not found</ChannelNotFound>;
   }
 
   const { xlimage, title, largeimage, description } = selectedChannel;
 
   return (
-    <View style={{ flex: 1 }}>
+    <Container>
       <Header
         largeimage={largeimage[0]}
         xlimage={xlimage[0]}
@@ -52,6 +55,6 @@ export function Playlist() {
           <Song key={idx} song={song} />
         ))}
       </ScrollView>
-    </View>
+    </Container>
   );
 }

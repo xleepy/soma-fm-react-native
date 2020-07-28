@@ -22,48 +22,50 @@ export function usePlayerSetup() {
   }, []);
 }
 
-export function usePlayerControls(selectedChannel, callback) {
-  const play = useCallback(() => {
-    (async function () {
-      if (!selectedChannel) {
-        return;
-      }
-      const {
-        title,
-        $: { id },
-        xlimage,
-        description,
-        genre,
-      } = selectedChannel;
-      try {
-        const currentTrack = await TrackPlayer.getCurrentTrack();
-        if (currentTrack && currentTrack.id != id) {
-          await TrackPlayer.stop();
-          await TrackPlayer.reset();
-        }
-        await TrackPlayer.add({
-          id,
-          url: `https://ice5.somafm.com/${id}-128-mp3`,
-          title: title[0],
-          artwork: xlimage[0],
-          artist: description[0],
-          genre: genre[0],
-        });
+async function play(channel) {
+  const {
+    title,
+    $: { id },
+    xlimage,
+    description,
+    genre,
+  } = channel;
+  try {
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+    if (currentTrack && currentTrack.id !== id) {
+      await TrackPlayer.stop();
+      await TrackPlayer.reset();
+    }
+    await TrackPlayer.add({
+      id,
+      url: `https://ice5.somafm.com/${id}-128-mp3`,
+      title: title[0],
+      artwork: xlimage[0],
+      artist: description[0],
+      genre: genre[0],
+    });
 
-        await TrackPlayer.play();
-        await addToRecentlyPlayed(selectedChannel);
-        callback(selectedChannel);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    await TrackPlayer.play();
+    await addToRecentlyPlayed(channel);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function stop() {
+  await TrackPlayer.stop();
+}
+
+export function usePlayerControls(selectedChannel, callback) {
+  const handlePlay = useCallback(() => {
+    if (selectedChannel) {
+      play(selectedChannel).then(() => callback(selectedChannel));
+    }
   }, [selectedChannel]);
 
-  const stop = useCallback(() => {
-    (async function () {
-      await TrackPlayer.stop();
-    })();
+  const handleStop = useCallback(() => {
+    stop();
   }, []);
 
-  return [play, stop];
+  return [handlePlay, handleStop];
 }

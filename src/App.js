@@ -6,8 +6,6 @@ import { BottomBar } from "./BottomBar/BottomBar";
 import SplashScreen from "react-native-splash-screen";
 import TrackPlayer from "react-native-track-player";
 import { Playlist } from "./Playlist/ogranisms/Playlist";
-import "intl";
-import "intl/locale-data/jsonp/en";
 import styled from "styled-components";
 
 const AppContainer = styled.View`

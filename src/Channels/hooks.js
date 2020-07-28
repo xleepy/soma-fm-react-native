@@ -14,15 +14,16 @@ async function cacheChannels(channels) {
 async function getCachedChannels() {
   try {
     const jsonChannels = await AsyncStorage.getItem("@channels");
-    return jsonChannels != null ? JSON.parse(jsonChannels) : null;
+    return jsonChannels ? JSON.parse(jsonChannels) : [];
   } catch (err) {
     console.warn("error reading cache", err);
+    return [];
   }
 }
 
 async function fetchChannels() {
   const cachedChannels = await getCachedChannels();
-  if (!cachedChannels || cachedChannels.length == 0) {
+  if (cachedChannels.length === 0) {
     return fetchXML("https://somafm.com/channels.xml").then(
       ({ channels: { channel } }) => {
         cacheChannels(channel);
@@ -43,8 +44,8 @@ export function useChannels() {
 
 function createSections(sections, channel) {
   const genre = channel.genre[0].split("|")[0];
-  const existingSectionIdx = sections.findIndex((s) => s.title == genre);
-  if (existingSectionIdx != -1) {
+  const existingSectionIdx = sections.findIndex((s) => s.title === genre);
+  if (existingSectionIdx !== -1) {
     const channels = sections[existingSectionIdx].data.slice();
     sections[existingSectionIdx].data = [...channels, channel];
     return sections;
@@ -59,7 +60,7 @@ function createSections(sections, channel) {
 }
 
 function sortByListeners(a, b) {
-  return parseInt(b.listeners[0]) - parseInt(a.listeners[0]);
+  return Number(b.listeners[0]) - Number(a.listeners[0]);
 }
 
 function reducer(state, action) {

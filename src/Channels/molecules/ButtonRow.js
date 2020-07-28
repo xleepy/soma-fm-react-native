@@ -25,17 +25,17 @@ export function ButtonRow({ currentType, dispatch }) {
     <Container>
       <Button label="Favourite" />
       <Button
-        isActive={currentType == "all"}
+        isActive={currentType === "all"}
         onPress={handleAllPress}
         label="All"
       />
       <Button
-        isActive={currentType == "genre"}
+        isActive={currentType === "genre"}
         onPress={handleByGenrePress}
         label="By genre"
       />
       <Button
-        isActive={currentType == "popularity"}
+        isActive={currentType === "popularity"}
         onPress={hanleByPopularityPress}
         label="By Popularity"
       />
