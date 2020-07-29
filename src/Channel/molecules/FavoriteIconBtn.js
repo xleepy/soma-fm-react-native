@@ -8,8 +8,10 @@ const FavoriteIcon = styled.Image`
 `;
 
 const IconContainer = styled.View`
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const favoriteIconInActive = require("../../../assets/icons/favorite-inactive.png");

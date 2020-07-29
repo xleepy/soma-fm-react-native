@@ -11,6 +11,7 @@ import {
 import { usePlayerSetup, usePlayerControls } from "./hooks";
 import styled from "styled-components";
 import { ActivityIndicator } from "react-native";
+import { APP_RED_COLOR, APP_WHITE_COLOR, BACKGROUND_COLOR } from "../constants";
 
 const playIcon = require("../../assets/icons/play.png");
 const stopIcon = require("../../assets/icons/stop.png");
@@ -23,8 +24,9 @@ const PlayContainer = styled.View`
   height: 50px;
   justify-content: center;
   align-items: center;
-  background-color: #000;
-  border-color: ${({ isPlaying }) => (isPlaying ? "#ff0000" : "#fff")};
+  background-color: ${BACKGROUND_COLOR};
+  border-color: ${({ isPlaying }) =>
+    isPlaying ? APP_RED_COLOR : APP_WHITE_COLOR};
 `;
 
 const Icon = styled.Image`

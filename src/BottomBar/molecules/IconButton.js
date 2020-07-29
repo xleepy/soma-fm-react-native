@@ -25,7 +25,8 @@ const IconContainer = styled.View`
   width: 75px;
   height: 55px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 12px;
 `;
 
 const Icon = styled.Image`

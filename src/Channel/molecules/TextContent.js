@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { APP_RED_COLOR, APP_WHITE_COLOR } from "../../constants";
 
 const Container = styled.View`
   flex: 1;
@@ -7,7 +8,7 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  color: #fff;
+  color: ${({ isPlaying }) => (isPlaying ? APP_RED_COLOR : APP_WHITE_COLOR)};
   font-family: "Montserrat-Bold";
   font-size: 14px;
   line-height: 17px;
@@ -22,10 +23,10 @@ const StyledText = styled.Text`
   margin-bottom: 4px;
 `;
 
-export function TextContent({ title, listeners, description }) {
+export function TextContent({ title, listeners, description, isPlaying }) {
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title isPlaying={isPlaying}>{title}</Title>
       <StyledText>{`Listeners: ${listeners}`}</StyledText>
       <StyledText>{description}</StyledText>
     </Container>

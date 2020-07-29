@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { APP_WHITE_COLOR } from "../../constants";
 
 const Container = styled.View`
   position: absolute;
@@ -11,18 +12,18 @@ const Container = styled.View`
 `;
 
 const BasicText = styled.Text`
-  color: #fff;
+  color: ${APP_WHITE_COLOR};
   font-family: "Montserrat-Regular";
 `;
 
 const Name = styled(BasicText)`
   font-weight: bold;
   font-size: 16px;
-  margin-bottom: 4px;
   line-height: 20px;
 `;
 
 const Description = styled(BasicText)`
+  margin-top: 4px;
   font-size: 12px;
   line-height: 15px;
   font-weight: 500;

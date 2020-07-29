@@ -1,7 +1,7 @@
 import React from "react";
 import { VirtualizedList } from "react-native";
 
-export function AllChannels({ data, renderItem }) {
+export function AllChannels({ data, renderItem, onScroll }) {
   return (
     <VirtualizedList
       data={data}
@@ -10,6 +10,7 @@ export function AllChannels({ data, renderItem }) {
       initialNumToRender={5}
       getItemCount={(channels) => channels.length}
       renderItem={renderItem}
+      onScroll={onScroll}
     />
   );
 }

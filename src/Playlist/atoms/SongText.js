@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { APP_WHITE_COLOR } from "../../constants";
 
 const StyledText = styled.Text`
  font-family: ${({ type }) =>
@@ -9,8 +10,8 @@ const StyledText = styled.Text`
  font-size: 14px;
  line-height: 17px;
  opacity: ${({ type }) => (type === "primary" ? "1" : "0.6")}
- color: #fff;
- margin-bottom: ${({ type }) => (type === "primary" ? "4px" : "7px")};
+ color: ${APP_WHITE_COLOR};
+ margin-bottom: ${({ type }) => (type === "primary" ? "4px" : "0px")};
 
 `;
 

@@ -79,7 +79,7 @@ export function useChannels() {
     };
   }, []);
 
-  const toggleChannelFavorite = useCallback((id) => {
+  const toggleChannelFavorite = (id) => {
     const modifiedChannels = channels.map((ch) => {
       if (ch.$.id === id) {
         return {
@@ -91,7 +91,7 @@ export function useChannels() {
     });
     cacheChannels(modifiedChannels);
     setChannels(modifiedChannels);
-  });
+  };
   return [channels, toggleChannelFavorite];
 }
 

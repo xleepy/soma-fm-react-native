@@ -1,8 +1,7 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback } from "react";
 import { IconButton } from "./molecules/IconButton";
 import { useHistory, useLocation } from "react-router";
 import { Player } from "../Player/Player";
-import { SelectedChannelContext } from "../App";
 import styled from "styled-components";
 
 const Container = styled.View`
@@ -11,23 +10,13 @@ const Container = styled.View`
   flex-direction: row;
   align-items: center;
   position: relative;
-  border-color: #f00;
-  border-style: solid;
-  border-top-width: 1px;
 `;
 
 const ButtonsContainer = styled.View`
   flex: 1;
   flex-direction: row;
-  justify-content: space-around;
-  padding: 0 20px;
+  justify-content: space-evenly;
   align-items: center;
-`;
-
-const AbsoluteBtnContainer = styled.View`
-  position: absolute;
-  left: 45%;
-  top: -20px;
 `;
 
 export function BottomBar() {
@@ -60,13 +49,11 @@ export function BottomBar() {
           iconType="playlist"
         />
       </ButtonsContainer>
+      <Player />
       <ButtonsContainer>
         <IconButton iconType="settings" />
         <IconButton iconType="sleep" />
       </ButtonsContainer>
-      <AbsoluteBtnContainer>
-        <Player />
-      </AbsoluteBtnContainer>
     </Container>
   );
 }

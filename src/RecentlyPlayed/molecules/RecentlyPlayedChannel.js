@@ -3,6 +3,7 @@ import { TouchableHighlight } from "react-native";
 import { ChannelImage } from "../atoms/ChannelImage";
 import { useSelectChannelAndRedirect } from "../../utils";
 import styled from "styled-components";
+import { APP_WHITE_COLOR } from "../../constants";
 
 const Container = styled.View`
   flex-direction: column;
@@ -13,7 +14,7 @@ export const ChannelName = styled.Text`
   font-family: "Montserrat-Bold";
   font-weight: bold;
   font-size: 13px;
-  color: #fff;
+  color: ${APP_WHITE_COLOR};
 `;
 
 export function RecentlyPlayedChannel({ channel }) {

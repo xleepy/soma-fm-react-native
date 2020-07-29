@@ -24,6 +24,9 @@ export default function App() {
 
   useEffect(() => {
     SplashScreen.hide();
+    StatusBar.setBackgroundColor("rgba(0,0,0,0)");
+    StatusBar.setBarStyle("light-content");
+    StatusBar.setTranslucent(true);
   }, []);
 
   return (
@@ -38,7 +41,7 @@ export default function App() {
           <Route path="/player">
             <Playlist />
           </Route>
-          <StatusBar backgroundColor="transparent" translucent />
+          <StatusBar />
           <BottomBar />
         </AppContainer>
       </SelectedChannelContext.Provider>

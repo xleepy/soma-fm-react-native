@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { TouchableHighlight } from "react-native";
 import { TextContent } from "../molecules/TextContent";
 import { useSelectChannelAndRedirect } from "../../utils";
@@ -45,6 +45,7 @@ export function Channel({ channel, onFavoritePress }) {
           }}
         />
         <TextContent
+          isPlaying={false}
           title={title[0]}
           listeners={listeners[0]}
           description={description[0]}

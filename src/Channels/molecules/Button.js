@@ -1,18 +1,24 @@
 import React from "react";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import styled from "styled-components";
+import {
+  APP_RED_COLOR,
+  APP_WHITE_COLOR,
+  BACKGROUND_COLOR,
+} from "../../constants";
 
 const StyledText = styled.Text`
-  color: ${({ isActive }) => (isActive ? "#ff0000" : "#fff")};
+  color: ${({ isActive }) => (isActive ? APP_RED_COLOR : APP_WHITE_COLOR)};
   font-family: "Montserrat-Bold";
   font-size: 14px;
   text-align: center;
 `;
 
 const Container = styled.View`
-  background-color: #000;
+  background-color: ${BACKGROUND_COLOR};
   border-radius: 10px;
-  border-color: ${({ isActive }) => (isActive ? "#ff0000" : "#fff")};
+  border-color: ${({ isActive }) =>
+    isActive ? APP_RED_COLOR : APP_WHITE_COLOR};
   border-width: 0.5px;
   margin-right: 12px;
   margin-top: 8px;

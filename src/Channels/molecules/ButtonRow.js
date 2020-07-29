@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Button } from "../atoms/Button";
+import { Button } from "./Button";
 import styled from "styled-components";
 
 const Container = styled.View`
