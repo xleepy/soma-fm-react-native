@@ -33,7 +33,5 @@ export function useChannelSelect(channel, callback) {
 
 export function useSelectChannelAndRedirect(channel) {
   const history = useHistory();
-  return useChannelSelect(channel, () =>
-    history.push(`/player/${channel.$.id}`)
-  );
+  return useChannelSelect(channel, () => history.push(`/player`));
 }

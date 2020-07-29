@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "react-native";
 import { NativeRouter, Route } from "react-router-native";
-import { Channels } from "./Channels/Channels";
 import { BottomBar } from "./BottomBar/BottomBar";
 import SplashScreen from "react-native-splash-screen";
 import TrackPlayer from "react-native-track-player";
 import { Playlist } from "./Playlist/ogranisms/Playlist";
 import styled from "styled-components";
+import { Channels } from "./Channels";
 
 const AppContainer = styled.View`
   background-color: #000;
@@ -35,7 +35,7 @@ export default function App() {
           <Route exact path="/">
             <Channels />
           </Route>
-          <Route path="/player/:id">
+          <Route path="/player">
             <Playlist />
           </Route>
           <StatusBar backgroundColor="transparent" translucent />

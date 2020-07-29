@@ -1,15 +1,6 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useReducer, useCallback } from "react";
 import { fetchXML } from "../utils";
 import AsyncStorage from "@react-native-community/async-storage";
-
-async function cacheChannels(channels) {
-  try {
-    const jsonChannels = JSON.stringify(channels);
-    await AsyncStorage.setItem("@channels", jsonChannels);
-  } catch (err) {
-    console.warn("saving error", err);
-  }
-}
 
 async function getCachedChannels() {
   try {
@@ -21,13 +12,30 @@ async function getCachedChannels() {
   }
 }
 
-async function fetchChannels() {
+async function cacheChannels(channels) {
+  try {
+    const cachedChannels = await getCachedChannels();
+    if (cachedChannels.length > 0) {
+      await AsyncStorage.removeItem("@channels");
+    }
+    const jsonChannels = JSON.stringify(channels);
+    await AsyncStorage.setItem("@channels", jsonChannels);
+  } catch (err) {
+    console.warn("saving error", err);
+  }
+}
+
+async function fetchChannels(force = false) {
   const cachedChannels = await getCachedChannels();
-  if (cachedChannels.length === 0) {
+  if (cachedChannels.length === 0 || force) {
     return fetchXML("https://somafm.com/channels.xml").then(
       ({ channels: { channel } }) => {
-        cacheChannels(channel);
-        return channel;
+        const modifiedChannels = channel.map((ch) => ({
+          ...ch,
+          isFavorite: false,
+        }));
+        cacheChannels(modifiedChannels);
+        return modifiedChannels;
       }
     );
   }
@@ -37,9 +45,33 @@ async function fetchChannels() {
 export function useChannels() {
   const [channels, setChannels] = useState([]);
   useEffect(() => {
-    fetchChannels().then(setChannels);
+    let canceled = false;
+    async function getChannels() {
+      const fetchedChannels = await fetchChannels();
+      if (!canceled) {
+        setChannels(fetchedChannels);
+      }
+    }
+    getChannels();
+    return () => {
+      canceled = true;
+    };
   }, []);
-  return channels;
+
+  const toggleChannelFavorite = useCallback((id) => {
+    const modifiedChannels = channels.map((ch) => {
+      if (ch.$.id === id) {
+        return {
+          ...ch,
+          isFavorite: !ch.isFavorite,
+        };
+      }
+      return ch;
+    });
+    cacheChannels(modifiedChannels);
+    setChannels(modifiedChannels);
+  });
+  return [channels, toggleChannelFavorite];
 }
 
 function createSections(sections, channel) {
@@ -71,6 +103,12 @@ function reducer(state, action) {
         data: action.data,
       };
     }
+    case "favorite": {
+      return {
+        type: "favorite",
+        data: action.data.filter((channel) => channel.isFavorite),
+      };
+    }
     case "genre":
       return {
         type: "genre",
@@ -87,16 +125,21 @@ function reducer(state, action) {
   }
 }
 export function useSortedChannels(channels) {
+  // TODO: think about better implementation of sorting and toggling favorite btn
+  const [latestSortType, setSortType] = useState("all");
   const [sortedChannels, dispatch] = useReducer(reducer, {
     type: "all",
     data: [],
   });
 
   useEffect(() => {
-    dispatch({ type: "all", data: channels });
+    dispatch({ type: latestSortType, data: channels });
   }, [channels]);
 
-  const channelsDispatch = (type) => dispatch({ type, data: channels });
+  const channelsDispatch = (type) => {
+    setSortType(type);
+    dispatch({ type, data: channels });
+  };
 
   return [sortedChannels, channelsDispatch];
 }

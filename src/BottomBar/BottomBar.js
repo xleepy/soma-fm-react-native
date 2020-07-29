@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from "react";
-import { IconButton } from "../Channels/atoms/IconButton";
+import { IconButton } from "./molecules/IconButton";
 import { useHistory, useLocation } from "react-router";
 import { Player } from "../Player/Player";
 import { SelectedChannelContext } from "../App";
@@ -45,7 +45,7 @@ export function BottomBar() {
   }, [selectedChannel, pathname]);
 
   const isHomeActive = pathname.length === 1 && pathname.startsWith("/");
-  const isPlaylistActive = pathname.includes("/player/");
+  const isPlaylistActive = pathname.includes("/player");
 
   return (
     <Container>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { TouchableHighlight } from "react-native";
 import { TextContent } from "../molecules/TextContent";
 import { useSelectChannelAndRedirect } from "../../utils";
@@ -28,12 +28,35 @@ const FavoriteIcon = styled.Image`
   height: 18px;
 `;
 
-const favoriteIcon = require("../../../assets/icons/favorite-inactive.png");
+const IconContainer = styled.View`
+  width: 32px;
+  height: 32px;
+`;
 
-export function Channel({ channel }) {
+const favoriteIconInActive = require("../../../assets/icons/favorite-inactive.png");
+const favoriteIconActive = require("../../../assets/icons/favorite-active.png");
+
+export function Channel({ channel, onFavoriteClick }) {
   const selectChannel = useSelectChannelAndRedirect(channel);
 
-  const { title, xlimage, listeners, description } = channel;
+  const {
+    title,
+    xlimage,
+    listeners,
+    description,
+    isFavorite,
+    $: { id },
+  } = channel;
+
+  const favoriteIcon = isFavorite ? favoriteIconActive : favoriteIconInActive;
+
+  const handleFavoritePress = useCallback(
+    (event) => {
+      event.preventDefault();
+      onFavoriteClick(id);
+    },
+    [onFavoriteClick]
+  );
   return (
     <TouchableHighlight onPress={selectChannel}>
       <ChannelContainer>
@@ -48,11 +71,10 @@ export function Channel({ channel }) {
           description={description[0]}
         />
         <AbsoluteContainer>
-          <TouchableHighlight
-            onPress={(event) => event.preventDefault()}
-            style={{ width: "100%", height: "100%" }}
-          >
-            <FavoriteIcon source={favoriteIcon} />
+          <TouchableHighlight onPress={handleFavoritePress}>
+            <IconContainer>
+              <FavoriteIcon source={favoriteIcon} />
+            </IconContainer>
           </TouchableHighlight>
         </AbsoluteContainer>
       </ChannelContainer>

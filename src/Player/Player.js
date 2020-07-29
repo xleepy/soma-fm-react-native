@@ -6,9 +6,11 @@ import {
   useTrackPlayerEvents,
   TrackPlayerEvents,
   STATE_PLAYING,
+  STATE_BUFFERING,
 } from "react-native-track-player";
 import { usePlayerSetup, usePlayerControls } from "./hooks";
 import styled from "styled-components";
+import { ActivityIndicator } from "react-native";
 
 const playIcon = require("../../assets/icons/play.png");
 const stopIcon = require("../../assets/icons/stop.png");
@@ -54,23 +56,27 @@ export function Player() {
     setLatestChannel(channel)
   );
 
-  const isPlaying = playbackState && playbackState === STATE_PLAYING;
+  const isPlaying = playbackState === STATE_PLAYING;
+  const isBuffering = playbackState === STATE_BUFFERING;
 
   const togglePlay = useCallback(() => {
-    if (isPlaying) {
+    if (isPlaying || isBuffering) {
       stop();
     } else {
       play();
     }
-  }, [isPlaying, stop, play]);
+  }, [isPlaying, isBuffering]);
 
   usePlayerSetup();
 
   useEffect(() => {
-    if (!selectedChannel || !latestChannel) {
+    if (!selectedChannel) {
       return;
     }
-    if (isPlaying && selectedChannel.$.id !== latestChannel.$.id) {
+    if (
+      (!isPlaying && !latestChannel) ||
+      (isPlaying && selectedChannel.$.id !== latestChannel.$.id)
+    ) {
       play();
     }
   }, [selectedChannel, isPlaying, setLatestChannel, latestChannel]);
@@ -79,8 +85,9 @@ export function Player() {
 
   return (
     <TouchableHighlight onPress={togglePlay}>
-      <PlayContainer isPlaying={isPlaying}>
-        <Icon isPlaying={isPlaying} source={icon} />
+      <PlayContainer isPlaying={isPlaying || isBuffering}>
+        {isBuffering && <ActivityIndicator size="small" color="#f00" />}
+        {!isBuffering && <Icon isPlaying={isPlaying} source={icon} />}
       </PlayContainer>
     </TouchableHighlight>
   );

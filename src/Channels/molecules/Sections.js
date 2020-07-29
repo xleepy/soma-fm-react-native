@@ -1,6 +1,5 @@
 import React from "react";
 import { SectionList } from "react-native";
-import { Channel } from "../../Channel/organisms/Channel";
 import styled from "styled-components";
 
 const SectionHeader = styled.Text`
@@ -12,15 +11,11 @@ const SectionHeader = styled.Text`
   letter-spacing: 1px;
 `;
 
-function renderItem({ item }) {
-  return <Channel key={item.$.id} channel={item} />;
-}
-
 function renderSectionHeader({ section: { title } }) {
   return <SectionHeader>{title}</SectionHeader>;
 }
 
-export function Sections({ data }) {
+export function Sections({ data, renderItem }) {
   return (
     <SectionList
       sections={data}

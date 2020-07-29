@@ -10,6 +10,10 @@ const Container = styled.View`
 `;
 
 export function ButtonRow({ currentType, dispatch }) {
+  const handleFavoritePress = useCallback(() => {
+    dispatch("favorite");
+  }, [dispatch]);
+
   const handleAllPress = useCallback(() => {
     dispatch("all");
   }, [dispatch]);
@@ -21,9 +25,14 @@ export function ButtonRow({ currentType, dispatch }) {
   const hanleByPopularityPress = useCallback(() => {
     dispatch("popularity");
   }, [dispatch]);
+
   return (
     <Container>
-      <Button label="Favourite" />
+      <Button
+        isActive={currentType === "favorite"}
+        onPress={handleFavoritePress}
+        label="Favourite"
+      />
       <Button
         isActive={currentType === "all"}
         onPress={handleAllPress}
