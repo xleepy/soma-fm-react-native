@@ -7,6 +7,7 @@ export function AllChannels({ data, renderItem }) {
       data={data}
       keyExtractor={(item) => item.$.id}
       getItem={(channels, idx) => channels[idx]}
+      initialNumToRender={5}
       getItemCount={(channels) => channels.length}
       renderItem={renderItem}
     />

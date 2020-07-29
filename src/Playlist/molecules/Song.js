@@ -9,7 +9,6 @@ import styled from "styled-components";
 // TODO: move to generic components
 const ContainerRow = styled.View`
   flex-direction: row;
-  padding: 0 14px;
 `;
 
 const numberFormatter = new Intl.NumberFormat("en-US", {
@@ -30,7 +29,7 @@ export function Song({ song: { artist, title, date } }) {
   return (
     <ContainerRow>
       <View style={{ flex: 1, flexShrink: 1, paddingRight: 10 }}>
-        <SongText>{title[0]}</SongText>
+        <SongText type="primary">{title[0]}</SongText>
         <SongText>{artist[0]}</SongText>
       </View>
       <View
@@ -38,7 +37,7 @@ export function Song({ song: { artist, title, date } }) {
           flexDirection: "row",
         }}
       >
-        <SongText>{`${formattedDate}`}</SongText>
+        <SongText type="primary">{`${formattedDate}`}</SongText>
         <Image
           style={{
             marginLeft: 13,

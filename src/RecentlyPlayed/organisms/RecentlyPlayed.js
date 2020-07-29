@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { FlatList } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { FlatList, Animated } from "react-native";
 import { RecentlyPlayedChannel } from "../molecules/RecentlyPlayedChannel";
 import { getRecentlyPlayed } from "../utils";
 import styled from "styled-components";
 
-const Container = styled.View`
+const Container = styled(Animated.View)`
   margin-bottom: 16px;
+  display: ${({ isHidden }) => (isHidden ? "none" : "flex")};
 `;
 
 const Title = styled.Text`
@@ -18,14 +19,15 @@ const Title = styled.Text`
 
 export function RecentlyPlayed() {
   const [items, setItems] = useState([]);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     getRecentlyPlayed().then(setItems);
   }, []);
 
   const renderItem = ({ item }) => <RecentlyPlayedChannel channel={item} />;
 
-  return items.length === 0 ? null : (
-    <Container>
+  return (
+    <Container isHidden={items.length === 0}>
       <Title>Recently Played</Title>
       <FlatList
         horizontal

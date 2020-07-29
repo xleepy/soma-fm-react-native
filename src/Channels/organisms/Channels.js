@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ButtonRow } from "../molecules/ButtonRow";
 import { useChannels, useSortedChannels } from "../hooks";
 import { RecentlyPlayed } from "../../RecentlyPlayed/organisms/RecentlyPlayed";
@@ -26,8 +26,8 @@ const StationsTitle = styled.Text`
   line-height: 22px;
 `;
 
-const renderChannel = (onFavoriteClick) => ({ item }) => {
-  return <Channel channel={item} onFavoriteClick={onFavoriteClick} />;
+const renderChannel = (onFavoritePress) => ({ item }) => {
+  return <Channel channel={item} onFavoritePress={onFavoritePress} />;
 };
 
 export function Channels() {

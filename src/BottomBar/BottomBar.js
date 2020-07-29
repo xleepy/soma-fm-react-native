@@ -31,7 +31,6 @@ const AbsoluteBtnContainer = styled.View`
 `;
 
 export function BottomBar() {
-  const [selectedChannel] = useContext(SelectedChannelContext);
   const history = useHistory();
   const { pathname } = useLocation();
   const navigateToHome = useCallback(() => {
@@ -39,10 +38,10 @@ export function BottomBar() {
   }, []);
 
   const navigateToPlayer = useCallback(() => {
-    if (selectedChannel && !pathname.includes("player")) {
-      history.push(`player/${selectedChannel}`);
+    if (!pathname.includes("player")) {
+      history.push(`/player`);
     }
-  }, [selectedChannel, pathname]);
+  }, [pathname]);
 
   const isHomeActive = pathname.length === 1 && pathname.startsWith("/");
   const isPlaylistActive = pathname.includes("/player");

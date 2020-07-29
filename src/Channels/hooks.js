@@ -20,20 +20,41 @@ async function cacheChannels(channels) {
     }
     const jsonChannels = JSON.stringify(channels);
     await AsyncStorage.setItem("@channels", jsonChannels);
+    await AsyncStorage.setItem("@fetch-timestamp", Date.now().toString());
   } catch (err) {
     console.warn("saving error", err);
   }
 }
 
-async function fetchChannels(force = false) {
+async function getLatestFetchTimestamp() {
+  const timestamp = await AsyncStorage.getItem("@fetch-timestamp");
+  return timestamp ? Number(timestamp) : null;
+}
+
+async function fetchChannels() {
   const cachedChannels = await getCachedChannels();
-  if (cachedChannels.length === 0 || force) {
+  const latestFetchTimeStamp = await getLatestFetchTimestamp();
+  // latest fetch timestamp + 30 min offset to refetch again on component mount
+  const shouldUpdate =
+    !!latestFetchTimeStamp &&
+    latestFetchTimeStamp + 30 * 60000 - Date.now() <= 0;
+
+  if (cachedChannels.length === 0 || shouldUpdate) {
     return fetchXML("https://somafm.com/channels.xml").then(
       ({ channels: { channel } }) => {
-        const modifiedChannels = channel.map((ch) => ({
-          ...ch,
-          isFavorite: false,
-        }));
+        const modifiedChannels = channel.map((ch) => {
+          const cachedChannel = cachedChannels.find((c) => c.$.id === ch.$.id);
+          if (cachedChannel) {
+            return {
+              ...cachedChannel,
+              ...ch,
+            };
+          }
+          return {
+            ...ch,
+            isFavorite: false,
+          };
+        });
         cacheChannels(modifiedChannels);
         return modifiedChannels;
       }
