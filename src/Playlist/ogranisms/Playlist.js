@@ -30,27 +30,29 @@ export function Playlist() {
   const { xlimage, title, largeimage, description } = selectedChannel;
 
   return (
-    <Container>
-      <Header
-        largeimage={largeimage[0]}
-        xlimage={xlimage[0]}
-        description={description[0]}
-        title={title[0]}
-      />
-      {/* TODO: for now ugly list of songs, rewrite */}
-      <ScrollView
-        style={{
-          flex: 1,
-          paddingVertical: 10,
-        }}
-        refreshControl={
-          <RefreshControl refreshing={isFetching} onRefresh={refresh} />
-        }
-      >
-        {songs.map((song, idx) => (
-          <Song key={idx} song={song} />
-        ))}
-      </ScrollView>
-    </Container>
+    <MenuProvider>
+      <Container>
+        <Header
+          largeimage={largeimage[0]}
+          xlimage={xlimage[0]}
+          description={description[0]}
+          title={title[0]}
+        />
+        {/* TODO: for now ugly list of songs, rewrite */}
+        <ScrollView
+          style={{
+            flex: 1,
+            paddingVertical: 10,
+          }}
+          refreshControl={
+            <RefreshControl refreshing={isFetching} onRefresh={refresh} />
+          }
+        >
+          {songs.map((song, idx) => (
+            <Song key={idx} song={song} />
+          ))}
+        </ScrollView>
+      </Container>
+    </MenuProvider>
   );
 }

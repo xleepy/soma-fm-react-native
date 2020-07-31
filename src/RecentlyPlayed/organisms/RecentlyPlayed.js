@@ -4,6 +4,7 @@ import { RecentlyPlayedChannel } from "../molecules/RecentlyPlayedChannel";
 import { getRecentlyPlayed } from "../utils";
 import styled from "styled-components";
 import { APP_WHITE_COLOR } from "../../constants";
+import { useDataFetchEffect } from "../../utils";
 
 const Container = styled(Animated.View)`
   margin-bottom: 16px;
@@ -20,9 +21,7 @@ const Title = styled.Text`
 
 export function RecentlyPlayed({ isHidden = false }) {
   const [items, setItems] = useState([]);
-  useEffect(() => {
-    getRecentlyPlayed().then(setItems);
-  }, []);
+  useDataFetchEffect(getRecentlyPlayed, setItems);
 
   const renderItem = ({ item }) => <RecentlyPlayedChannel channel={item} />;
 

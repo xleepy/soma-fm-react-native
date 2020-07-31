@@ -1,5 +1,5 @@
 import { parseString } from "react-native-xml2js";
-import { useContext, useCallback, useEffect } from "react";
+import { useContext, useCallback, useEffect, useState } from "react";
 import { SelectedChannelContext } from "./App";
 import { useHistory } from "react-router";
 
@@ -36,12 +36,62 @@ export function useSelectChannelAndRedirect(channel) {
   return useChannelSelect(channel, () => history.push(`/player`));
 }
 
-export function useCancelableEffect(fetchCallback, deps = []) {
+function getPromise(promiseOrFunc) {
+  return typeof promiseOrFunc === "function" ? promiseOrFunc() : promiseOrFunc;
+}
+
+export function useDataFetchEffect(
+  promiseOrFunc,
+  onSuccess,
+  onError,
+  deps = []
+) {
+  const [isFetching, setFetchingState] = useState(false);
   useEffect(() => {
     let canceled = false;
-    fetchCallback(canceled);
-    return () => {
-      canceled = true;
-    };
+    const promise = getPromise(promiseOrFunc);
+    setFetchingState(true);
+    promise
+      .then((res) => {
+        if (!canceled) {
+          onSuccess(res);
+          setFetchingState(false);
+        }
+      })
+      .catch((err) => {
+        if (!canceled) {
+          onError(err);
+          setFetchingState(false);
+        }
+      });
+    return () => (canceled = true);
   }, deps);
+
+  const refetch = useCallback(async () => {
+    try {
+      setFetchingState(true);
+      const data = await getPromise(promiseOrFunc);
+      onSuccess(data);
+      setFetchingState(false);
+    } catch (err) {
+      setFetchingState(false);
+      onError(err);
+    }
+  }, [promiseOrFunc]);
+  return [isFetching, refetch];
+}
+
+export function useDataFetchCallback(promiseOrFunc, deps = []) {
+  const [isFetching, setFetchingState] = useState(false);
+  const [data, setData] = useState(null);
+  const fetchFunc = useCallback(async () => {
+    try {
+      setFetchingState(true);
+      const fetchedData = await getPromise(promiseOrFunc);
+      setData(fetchedData);
+    } catch (err) {
+      setFetchingState(false);
+    }
+  }, deps);
+  return [{ data, isFetching }, fetchFunc];
 }

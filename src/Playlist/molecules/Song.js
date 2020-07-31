@@ -1,4 +1,4 @@
-import { View, Text, Linking } from "react-native";
+import { View, Linking } from "react-native";
 import React from "react";
 import { Image } from "react-native";
 import { SongText } from "../atoms/SongText";
@@ -11,6 +11,7 @@ import {
   Menu,
   MenuOptions,
 } from "react-native-popup-menu";
+import { btoa } from "../../utils";
 
 // TODO: move to generic components
 const ContainerRow = styled.View`
@@ -63,9 +64,7 @@ export function Song({ song: { artist, title, date } }) {
             <MenuOption
               text="Spotify"
               onSelect={() => {
-                Linking.openURL(
-                  `https://api.spotify.com/v1/search?q=track:${title[0]}&artist:${artist[0]}&type=album`
-                );
+                Linking.openURL(`spotify://q=${artist[0]}`);
               }}
             />
           </MenuOptions>

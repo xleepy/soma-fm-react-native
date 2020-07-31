@@ -32,22 +32,20 @@ export default function App() {
 
   return (
     <NativeRouter>
-      <MenuProvider>
-        <SelectedChannelContext.Provider
-          value={[selectedChannel, setSelectedChannel]}
-        >
-          <AppContainer>
-            <Route exact path="/">
-              <Channels />
-            </Route>
-            <Route path="/player">
-              <Playlist />
-            </Route>
-            <StatusBar />
-            <BottomBar />
-          </AppContainer>
-        </SelectedChannelContext.Provider>
-      </MenuProvider>
+      <SelectedChannelContext.Provider
+        value={[selectedChannel, setSelectedChannel]}
+      >
+        <AppContainer>
+          <Route exact path="/">
+            <Channels />
+          </Route>
+          <Route path="/player">
+            <Playlist />
+          </Route>
+          <StatusBar />
+          <BottomBar />
+        </AppContainer>
+      </SelectedChannelContext.Provider>
     </NativeRouter>
   );
 }

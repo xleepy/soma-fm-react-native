@@ -1,5 +1,5 @@
 import { useEffect, useState, useReducer, useCallback } from "react";
-import { fetchXML, useCancelableEffect } from "../utils";
+import { fetchXML, useDataFetchEffect } from "../utils";
 import AsyncStorage from "@react-native-community/async-storage";
 import debounce from "lodash.debounce";
 
@@ -163,7 +163,6 @@ function reducer(state, action) {
 }
 export function useChannels() {
   // TODO: think about better implementation of sorting and toggling favorite btn
-  const [isFetching, setFetchingState] = useState(false);
 
   const [channels, dispatch] = useReducer(reducer, {
     type: "all",
@@ -175,26 +174,17 @@ export function useChannels() {
     dispatch({ type: "fetch", data: fetchedChannels });
   }
 
-  const refreshChannels = useCallback(() => {
-    setFetchingState(true);
-    fetchChannels(true)
-      .then(setChannels)
-      .then(() => setFetchingState(false))
-      .catch(() => setFetchingState(false));
-  }, [setFetchingState]);
-
   // NOTE: a bit odd should be rewritten i think
   const toggleChannelFavorite = debounce((id) => {
     dispatch({ type: "toggle-favorite", id });
   });
 
-  useCancelableEffect((canceled) => {
-    fetchChannels().then((fetchedChannels) => {
-      if (!canceled) {
-        setChannels(fetchedChannels);
-      }
-    });
-  }, []);
+  const [isFetching, refreshChannels] = useDataFetchEffect(
+    fetchChannels,
+    setChannels,
+    (err) => console.warn(err),
+    []
+  );
 
   const channelsDispatch = (type) => {
     dispatch({ type });
