@@ -107,7 +107,7 @@ function reducer(state, action) {
     case "fetch": {
       return {
         type: state.type,
-        data: action.data,
+        data: updateChannels(state.type, action.data),
         fetchedChannels: action.data,
       };
     }
@@ -153,7 +153,7 @@ function reducer(state, action) {
       return {
         ...state,
         type: state.type,
-        data: updateChannels(state.type, state.fetchedChannels),
+        data: updateChannels(state.type, modifiedChannels),
         fetchedChannels: modifiedChannels,
       };
     }
