@@ -7,6 +7,7 @@ import { AllChannels } from "../atoms/AllChannels";
 import styled from "styled-components";
 import { Channel } from "../../Channel/organisms/Channel";
 import { APP_WHITE_COLOR } from "../../constants";
+import { ActivityIndicator } from "react-native";
 
 const Container = styled.View`
   margin-top: 24px;
@@ -24,8 +25,13 @@ const renderChannel = (onFavoritePress) => ({ item }) => {
 };
 
 export function Channels() {
-  const [channels, toggleChannelFavorite] = useChannels();
-  const [{ type, data }, dispatch] = useSortedChannels(channels);
+  const [
+    { type, data },
+    dispatch,
+    toggleChannelFavorite,
+    refreshChannels,
+    isFetching,
+  ] = useChannels();
 
   return (
     <Container>
@@ -36,12 +42,16 @@ export function Channels() {
         <Sections
           data={data}
           renderItem={renderChannel(toggleChannelFavorite)}
+          isFetching={isFetching}
+          onRefresh={refreshChannels}
         />
       )}
       {type !== "genre" && (
         <AllChannels
           data={data}
           renderItem={renderChannel(toggleChannelFavorite)}
+          onRefresh={refreshChannels}
+          isFetching={isFetching}
         />
       )}
     </Container>

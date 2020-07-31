@@ -1,5 +1,5 @@
 import React from "react";
-import { SectionList } from "react-native";
+import { SectionList, RefreshControl } from "react-native";
 import styled from "styled-components";
 import { APP_WHITE_COLOR, BACKGROUND_COLOR } from "../../constants";
 
@@ -17,7 +17,13 @@ function renderSectionHeader({ section: { title } }) {
   return <SectionHeader>{title}</SectionHeader>;
 }
 
-export function Sections({ data, renderItem, onScroll }) {
+export function Sections({
+  data,
+  renderItem,
+  onScroll,
+  isFetching,
+  onRefresh,
+}) {
   return (
     <SectionList
       sections={data}
@@ -26,6 +32,9 @@ export function Sections({ data, renderItem, onScroll }) {
       renderSectionHeader={renderSectionHeader}
       onScroll={onScroll}
       stickySectionHeadersEnabled
+      refreshControl={
+        <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />
+      }
     />
   );
 }

@@ -7,6 +7,7 @@ import TrackPlayer from "react-native-track-player";
 import { Playlist } from "./Playlist/ogranisms/Playlist";
 import styled from "styled-components";
 import { Channels } from "./Channels";
+import { MenuProvider } from "react-native-popup-menu";
 
 const AppContainer = styled.View`
   background-color: #000;
@@ -31,20 +32,22 @@ export default function App() {
 
   return (
     <NativeRouter>
-      <SelectedChannelContext.Provider
-        value={[selectedChannel, setSelectedChannel]}
-      >
-        <AppContainer>
-          <Route exact path="/">
-            <Channels />
-          </Route>
-          <Route path="/player">
-            <Playlist />
-          </Route>
-          <StatusBar />
-          <BottomBar />
-        </AppContainer>
-      </SelectedChannelContext.Provider>
+      <MenuProvider>
+        <SelectedChannelContext.Provider
+          value={[selectedChannel, setSelectedChannel]}
+        >
+          <AppContainer>
+            <Route exact path="/">
+              <Channels />
+            </Route>
+            <Route path="/player">
+              <Playlist />
+            </Route>
+            <StatusBar />
+            <BottomBar />
+          </AppContainer>
+        </SelectedChannelContext.Provider>
+      </MenuProvider>
     </NativeRouter>
   );
 }

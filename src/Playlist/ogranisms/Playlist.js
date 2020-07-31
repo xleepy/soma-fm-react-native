@@ -1,11 +1,12 @@
 import React from "react";
 import { useContext } from "react";
 import { Header } from "../molecules/Header";
-import { ScrollView } from "react-native";
+import { ScrollView, RefreshControl } from "react-native";
 import { SelectedChannelContext } from "../../App";
 import { Song } from "../molecules/Song";
 import styled from "styled-components";
 import { useSongs } from "../hooks";
+import { MenuProvider } from "react-native-popup-menu";
 
 const ChannelNotFound = styled.Text`
   color: #ff0002;
@@ -20,7 +21,7 @@ const Container = styled.View`
 
 export function Playlist() {
   const [selectedChannel] = useContext(SelectedChannelContext);
-  const songs = useSongs(selectedChannel);
+  const [songs, isFetching, refresh] = useSongs(selectedChannel);
 
   if (!selectedChannel) {
     return <ChannelNotFound>Please select channel</ChannelNotFound>;
@@ -42,6 +43,9 @@ export function Playlist() {
           flex: 1,
           paddingVertical: 10,
         }}
+        refreshControl={
+          <RefreshControl refreshing={isFetching} onRefresh={refresh} />
+        }
       >
         {songs.map((song, idx) => (
           <Song key={idx} song={song} />

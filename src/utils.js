@@ -1,5 +1,5 @@
 import { parseString } from "react-native-xml2js";
-import { useContext, useCallback } from "react";
+import { useContext, useCallback, useEffect } from "react";
 import { SelectedChannelContext } from "./App";
 import { useHistory } from "react-router";
 
@@ -34,4 +34,14 @@ export function useChannelSelect(channel, callback) {
 export function useSelectChannelAndRedirect(channel) {
   const history = useHistory();
   return useChannelSelect(channel, () => history.push(`/player`));
+}
+
+export function useCancelableEffect(fetchCallback, deps = []) {
+  useEffect(() => {
+    let canceled = false;
+    fetchCallback(canceled);
+    return () => {
+      canceled = true;
+    };
+  }, deps);
 }

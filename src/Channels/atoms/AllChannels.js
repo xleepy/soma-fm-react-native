@@ -1,7 +1,13 @@
 import React from "react";
-import { VirtualizedList } from "react-native";
+import { VirtualizedList, RefreshControl } from "react-native";
 
-export function AllChannels({ data, renderItem, onScroll }) {
+export function AllChannels({
+  data,
+  renderItem,
+  onScroll,
+  onRefresh,
+  isFetching,
+}) {
   return (
     <VirtualizedList
       data={data}
@@ -11,6 +17,9 @@ export function AllChannels({ data, renderItem, onScroll }) {
       getItemCount={(channels) => channels.length}
       renderItem={renderItem}
       onScroll={onScroll}
+      refreshControl={
+        <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />
+      }
     />
   );
 }

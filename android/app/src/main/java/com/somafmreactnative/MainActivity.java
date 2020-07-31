@@ -13,6 +13,12 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     SplashScreen.show(this);
     super.onCreate(savedInstanceState);
+    //REF: issue https://issuetracker.google.com/issues/36941942
+    // Solution: https://stackoverflow.com/questions/7944338/resume-last-activity-when-launcher-icon-is-clicked
+    if (!isTaskRoot()) {
+        finish();
+        return;
+    }
     // SplashScreen.show(...) has to be called after super.onCreate(...)
     // Below line is handled by '@expo/configure-splash-screen' command and it's discouraged to modify it manually
     // SplashScreen.show(this, SplashScreenImageResizeMode.CONTAIN, ReactRootView.class);

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { fetchXML } from "../utils";
+import { useState, useCallback } from "react";
+import { fetchXML, useCancelableEffect } from "../utils";
 
 const songsUrl = (channel) => `https://somafm.com/songs/${channel}.xml`;
 
@@ -11,28 +11,37 @@ async function fetchSongs(id) {
 
 export function useSongs(selectedChannel) {
   const [songs, setSongs] = useState([]);
-  useEffect(() => {
-    let canceled = false;
-    async function getFetchedSongs() {
+  const [isFetching, setFetching] = useState(false);
+  useCancelableEffect(
+    (canceled) => {
       if (!selectedChannel) {
         return;
       }
-      const {
-        $: { id },
-      } = selectedChannel;
-      const fetchedSongs = await fetchSongs(id);
-      if (!canceled) {
-        setSongs(fetchedSongs);
-      }
+      setFetching(true);
+      fetchSongs(selectedChannel.$.id)
+        .then((fetchedSongs) => {
+          if (!canceled) {
+            setSongs(fetchedSongs);
+            setFetching(false);
+          }
+        })
+        .catch((err) => {
+          console.warn(err);
+          setFetching(false);
+        });
+    },
+    [selectedChannel]
+  );
+
+  // TODO: create fetch state handler or maybe use some package for example SWR
+  const refresh = useCallback(() => {
+    if (!selectedChannel) {
+      return;
     }
-    getFetchedSongs();
-    // REF: interval issue https://github.com/facebook/react-native/issues/12981
-    const interval = setTimeout(getFetchedSongs, 60000);
-    return () => {
-      canceled = true;
-      clearTimeout(interval);
-    };
+    setFetching(true);
+    fetchSongs(selectedChannel.$.id).then(setSongs);
+    setFetching(false);
   }, [selectedChannel]);
 
-  return songs;
+  return [songs, isFetching, refresh];
 }
