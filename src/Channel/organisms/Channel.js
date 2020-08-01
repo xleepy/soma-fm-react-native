@@ -24,8 +24,10 @@ const AbsoluteContainer = styled.View`
   top: 0;
 `;
 
-export function Channel({ channel, onFavoritePress }) {
+export function Channel({ channel, onFavoritePress, isChannelPlaying }) {
   const selectChannel = useSelectChannelAndRedirect(channel);
+
+  const isPlaying = isChannelPlaying(channel.$.id);
 
   const {
     title,
@@ -45,7 +47,7 @@ export function Channel({ channel, onFavoritePress }) {
           }}
         />
         <TextContent
-          isPlaying={false}
+          isPlaying={isPlaying}
           title={title[0]}
           listeners={listeners[0]}
           description={description[0]}

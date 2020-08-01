@@ -7,6 +7,7 @@ const Container = styled.View`
   flex-wrap: wrap;
   padding: 10px 0;
   margin-bottom: 10px;
+  justify-content: space-between;
 `;
 
 export function ButtonRow({ currentType, dispatch }) {

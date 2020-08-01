@@ -54,13 +54,15 @@ export function useDataFetchEffect(
     promise
       .then((res) => {
         if (!canceled) {
-          onSuccess(res);
+          // eslint-disable-next-line no-unused-expressions
+          onSuccess && onSuccess(res);
           setFetchingState(false);
         }
       })
       .catch((err) => {
         if (!canceled) {
-          onError(err);
+          // eslint-disable-next-line no-unused-expressions
+          onError && onError(err);
           setFetchingState(false);
         }
       });
@@ -71,11 +73,13 @@ export function useDataFetchEffect(
     try {
       setFetchingState(true);
       const data = await getPromise(promiseOrFunc);
-      onSuccess(data);
+      // eslint-disable-next-line no-unused-expressions
+      onSuccess && onSuccess(data);
       setFetchingState(false);
     } catch (err) {
       setFetchingState(false);
-      onError(err);
+      // eslint-disable-next-line no-unused-expressions
+      onError && onError(err);
     }
   }, [promiseOrFunc]);
   return [isFetching, refetch];

@@ -20,7 +20,6 @@ const Container = styled.View`
   border-color: ${({ isActive }) =>
     isActive ? APP_RED_COLOR : APP_WHITE_COLOR};
   border-width: 0.5px;
-  margin-right: 12px;
   margin-top: 8px;
   border-style: solid;
   padding: 3px 6px;

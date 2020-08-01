@@ -11,13 +11,16 @@ export async function getRecentlyPlayed() {
 }
 
 export async function addToRecentlyPlayed(channel) {
-  const items = await getRecentlyPlayed();
-  const isPlayed = items.some((ch) => ch.$.id === channel.$.id);
+  const channels = await getRecentlyPlayed();
+  const isPlayed = channels.some((ch) => ch.$.id === channel.$.id);
   if (isPlayed) {
     return;
   }
-  if (items.length > 7) {
-    items.splice(items.length - 3, 3);
+  if (channels.length > 7) {
+    channels.splice(channels.length - 3, 3);
   }
-  AsyncStorage.setItem("@recently-played", JSON.stringify([channel, ...items]));
+  AsyncStorage.setItem(
+    "@recently-played",
+    JSON.stringify([channel, ...channels])
+  );
 }

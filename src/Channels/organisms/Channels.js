@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { Channel } from "../../Channel/organisms/Channel";
 import { APP_WHITE_COLOR } from "../../constants";
 import { ActivityIndicator } from "react-native";
+import { useCurrentPlayingChannel } from "../../Player/hooks";
 
 const Container = styled.View`
   margin-top: 24px;
@@ -20,8 +21,14 @@ const StationsTitle = styled.Text`
   line-height: 22px;
 `;
 
-const renderChannel = (onFavoritePress) => ({ item }) => {
-  return <Channel channel={item} onFavoritePress={onFavoritePress} />;
+const renderChannel = (onFavoritePress, isChannelPlaying) => ({ item }) => {
+  return (
+    <Channel
+      channel={item}
+      onFavoritePress={onFavoritePress}
+      isChannelPlaying={isChannelPlaying}
+    />
+  );
 };
 
 export function Channels() {
@@ -33,6 +40,15 @@ export function Channels() {
     isFetching,
   ] = useChannels();
 
+  const currentlyPlaingChannel = useCurrentPlayingChannel();
+
+  const isChannelPlaying = useCallback(
+    (channelId) => {
+      return currentlyPlaingChannel === channelId;
+    },
+    [currentlyPlaingChannel]
+  );
+
   return (
     <Container>
       <RecentlyPlayed />
@@ -41,7 +57,7 @@ export function Channels() {
       {type === "genre" && (
         <Sections
           data={data}
-          renderItem={renderChannel(toggleChannelFavorite)}
+          renderItem={renderChannel(toggleChannelFavorite, isChannelPlaying)}
           isFetching={isFetching}
           onRefresh={refreshChannels}
         />
@@ -49,7 +65,7 @@ export function Channels() {
       {type !== "genre" && (
         <AllChannels
           data={data}
-          renderItem={renderChannel(toggleChannelFavorite)}
+          renderItem={renderChannel(toggleChannelFavorite, isChannelPlaying)}
           onRefresh={refreshChannels}
           isFetching={isFetching}
         />

@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
 
 import { TouchableHighlight } from "react-native-gesture-handler";
-import { SelectedChannelContext } from "../App";
+import { SelectedChannelContext, PlayerStateContext } from "../App";
 import {
   useTrackPlayerEvents,
   TrackPlayerEvents,
   STATE_PLAYING,
   STATE_BUFFERING,
 } from "react-native-track-player";
-import { usePlayerSetup, usePlayerControls } from "./hooks";
+import { usePlayerSetup, usePlayerControls, usePlayerState } from "./hooks";
 import styled from "styled-components";
 import { ActivityIndicator } from "react-native";
 import { APP_RED_COLOR, APP_WHITE_COLOR, BACKGROUND_COLOR } from "../constants";
@@ -34,32 +34,18 @@ const Icon = styled.Image`
   width: ${({ isPlaying }) => (isPlaying ? "18px" : "13px")};
 `;
 
-const events = [
-  TrackPlayerEvents.PLAYBACK_STATE,
-  TrackPlayerEvents.PLAYBACK_ERROR,
-];
-
 export function Player() {
   const [selectedChannel] = useContext(SelectedChannelContext);
+  const playerState = useContext(PlayerStateContext);
 
   const [latestChannel, setLatestChannel] = useState(null);
-  const [playbackState, setPlaybackState] = useState(null);
-
-  useTrackPlayerEvents(events, (event) => {
-    if (event.type === TrackPlayerEvents.PLAYBACK_ERROR) {
-      console.warn("An error occurred while playing the current track.");
-    }
-    if (event.type === TrackPlayerEvents.PLAYBACK_STATE) {
-      setPlaybackState(event.state);
-    }
-  });
 
   const [play, stop] = usePlayerControls(selectedChannel, (channel) =>
     setLatestChannel(channel)
   );
 
-  const isPlaying = playbackState === STATE_PLAYING;
-  const isBuffering = playbackState === STATE_BUFFERING;
+  const isPlaying = playerState === STATE_PLAYING;
+  const isBuffering = playerState === STATE_BUFFERING;
 
   const togglePlay = useCallback(() => {
     if (isPlaying || isBuffering) {

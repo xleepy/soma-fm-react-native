@@ -1,5 +1,5 @@
 import { View, Linking } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
 import { Image } from "react-native";
 import { SongText } from "../atoms/SongText";
 import "intl";
@@ -11,7 +11,7 @@ import {
   Menu,
   MenuOptions,
 } from "react-native-popup-menu";
-import { btoa } from "../../utils";
+import { PopupMenu } from "./PopupMenu";
 
 // TODO: move to generic components
 const ContainerRow = styled.View`
@@ -36,6 +36,7 @@ function getFormattedDateFromTimestamp(timestamp) {
 
 export function Song({ song: { artist, title, date } }) {
   const formattedDate = getFormattedDateFromTimestamp(date[0]);
+
   return (
     <ContainerRow>
       <View style={{ flexShrink: 1, paddingRight: 10 }}>
@@ -48,27 +49,7 @@ export function Song({ song: { artist, title, date } }) {
         }}
       >
         <SongText type="primary">{`${formattedDate}`}</SongText>
-        <Menu>
-          <MenuTrigger style={{ height: 32, width: 32, alignItems: "center" }}>
-            <Image
-              style={{
-                marginLeft: 14,
-                alignSelf: "center",
-              }}
-              width={5}
-              height={20}
-              source={require("../../../assets/icons/dots.png")}
-            />
-          </MenuTrigger>
-          <MenuOptions>
-            <MenuOption
-              text="Spotify"
-              onSelect={() => {
-                Linking.openURL(`spotify://q=${artist[0]}`);
-              }}
-            />
-          </MenuOptions>
-        </Menu>
+        <PopupMenu song={`${artist[0]} - ${title[0]}`} />
       </View>
     </ContainerRow>
   );

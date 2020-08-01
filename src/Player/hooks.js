@@ -1,6 +1,11 @@
-import TrackPlayer from "react-native-track-player";
-import { useEffect, useCallback } from "react";
+import TrackPlayer, {
+  useTrackPlayerEvents,
+  TrackPlayerEvents,
+  STATE_PLAYING,
+} from "react-native-track-player";
+import { useEffect, useCallback, useState, useContext } from "react";
 import { addToRecentlyPlayed } from "../RecentlyPlayed/utils";
+import { SelectedChannelContext, PlayerStateContext } from "../App";
 
 async function setupPlayer() {
   await TrackPlayer.setupPlayer({});
@@ -68,4 +73,29 @@ export function usePlayerControls(selectedChannel, callback) {
   }, []);
 
   return [handlePlay, handleStop];
+}
+
+const events = [
+  TrackPlayerEvents.PLAYBACK_STATE,
+  TrackPlayerEvents.PLAYBACK_ERROR,
+];
+
+export function usePlayerState() {
+  const [playerState, setPlayerState] = useState(0);
+
+  useTrackPlayerEvents(events, (event) => {
+    if (event.type === TrackPlayerEvents.PLAYBACK_ERROR) {
+      console.warn("An error occurred while playing the current track.");
+    }
+    if (event.type === TrackPlayerEvents.PLAYBACK_STATE) {
+      setPlayerState(event.state);
+    }
+  });
+  return playerState;
+}
+
+export function useCurrentPlayingChannel() {
+  const [selectedChannel] = useContext(SelectedChannelContext);
+  const state = useContext(PlayerStateContext);
+  return selectedChannel && state === STATE_PLAYING && selectedChannel.$.id;
 }
