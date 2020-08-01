@@ -11,6 +11,8 @@ import org.devio.rn.splashscreen.SplashScreen;
 public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    setTheme(R.style.AppTheme); 
+    setContentView(R.layout.launch_screen);
     SplashScreen.show(this);
     super.onCreate(savedInstanceState);
     //REF: issue https://issuetracker.google.com/issues/36941942

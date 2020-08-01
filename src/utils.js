@@ -36,8 +36,10 @@ export function useSelectChannelAndRedirect(channel) {
   return useChannelSelect(channel, () => history.push(`/player`));
 }
 
-function getPromise(promiseOrFunc) {
-  return typeof promiseOrFunc === "function" ? promiseOrFunc() : promiseOrFunc;
+function getPromise(promiseOrFunc, force = false) {
+  return typeof promiseOrFunc === "function"
+    ? promiseOrFunc(force)
+    : promiseOrFunc;
 }
 
 export function useDataFetchEffect(
@@ -72,7 +74,7 @@ export function useDataFetchEffect(
   const refetch = useCallback(async () => {
     try {
       setFetchingState(true);
-      const data = await getPromise(promiseOrFunc);
+      const data = await getPromise(promiseOrFunc, true);
       // eslint-disable-next-line no-unused-expressions
       onSuccess && onSuccess(data);
       setFetchingState(false);
