@@ -64,21 +64,12 @@ async function fetchChannels(force = false) {
   return Promise.resolve(cachedChannels);
 }
 
-function createSections(sections, channel) {
+function createSectionsMap(sectionsMap, channel) {
   const genre = channel.genre[0].split("|")[0];
-  const existingSectionIdx = sections.findIndex((s) => s.title === genre);
-  if (existingSectionIdx !== -1) {
-    const channels = sections[existingSectionIdx].data.slice();
-    sections[existingSectionIdx].data = [...channels, channel];
-    return sections;
-  }
-  return [
-    ...sections,
-    {
-      title: genre,
-      data: [channel],
-    },
-  ];
+  const existingSectionChannels = sectionsMap[genre] || [];
+  return {
+    [genre]: [...existingSectionChannels, channel],
+  };
 }
 
 function sortByListeners(a, b) {
@@ -91,7 +82,13 @@ function updateChannels(type, channels) {
       return channels.filter((channel) => channel.isFavorite);
     }
     case "genre": {
-      return channels.reduce(createSections, []);
+      const sectionsMap = channels.reduce(createSectionsMap, []);
+      return Object.keys(sectionsMap).map((section) => {
+        return {
+          title: section,
+          data: sectionsMap[section] || [],
+        };
+      });
     }
     case "popularity": {
       return channels.slice().sort(sortByListeners);
