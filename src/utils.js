@@ -36,45 +36,31 @@ export function useSelectChannelAndRedirect(channel) {
   return useChannelSelect(channel, () => history.push(`/player`));
 }
 
-function getPromise(promiseOrFunc, force = false) {
-  return typeof promiseOrFunc === "function"
-    ? promiseOrFunc(force)
-    : promiseOrFunc;
-}
-
-export function useDataFetchEffect(
-  promiseOrFunc,
-  onSuccess,
-  onError,
-  deps = []
-) {
+export function useDataFetchEffect(promiseFunc, onSuccess, onError, deps = []) {
   const [isFetching, setFetchingState] = useState(false);
   useEffect(() => {
     let canceled = false;
-    const promise = getPromise(promiseOrFunc);
-    setFetchingState(true);
-    promise
-      .then((res) => {
+    async function fetchData() {
+      try {
+        setFetchingState(true);
+        const result = await promiseFunc();
         if (!canceled) {
-          // eslint-disable-next-line no-unused-expressions
-          onSuccess && onSuccess(res);
+          onSuccess(result);
           setFetchingState(false);
         }
-      })
-      .catch((err) => {
-        if (!canceled) {
-          // eslint-disable-next-line no-unused-expressions
-          onError && onError(err);
-          setFetchingState(false);
-        }
-      });
+      } catch (err) {
+        onError(err);
+        setFetchingState(false);
+      }
+    }
+    fetchData();
     return () => (canceled = true);
   }, deps);
 
   const refetch = useCallback(async () => {
     try {
       setFetchingState(true);
-      const data = await getPromise(promiseOrFunc, true);
+      const data = (await promiseFunc(true)) || [];
       // eslint-disable-next-line no-unused-expressions
       onSuccess && onSuccess(data);
       setFetchingState(false);
@@ -83,18 +69,19 @@ export function useDataFetchEffect(
       // eslint-disable-next-line no-unused-expressions
       onError && onError(err);
     }
-  }, [promiseOrFunc]);
+  }, [promiseFunc]);
   return [isFetching, refetch];
 }
 
-export function useDataFetchCallback(promiseOrFunc, deps = []) {
+export function useDataFetchCallback(promiseFunc, deps = []) {
   const [isFetching, setFetchingState] = useState(false);
   const [data, setData] = useState(null);
   const fetchFunc = useCallback(async () => {
     try {
       setFetchingState(true);
-      const fetchedData = await getPromise(promiseOrFunc);
+      const fetchedData = await promiseFunc();
       setData(fetchedData);
+      setFetchingState(false);
     } catch (err) {
       setFetchingState(false);
     }

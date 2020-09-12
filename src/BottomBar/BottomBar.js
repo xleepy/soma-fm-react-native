@@ -1,8 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { IconButton } from "./molecules/IconButton";
 import { useHistory, useLocation } from "react-router";
 import { Player } from "../Player/Player";
 import styled from "styled-components";
+import { SelectedChannelContext } from "../App";
 
 const Container = styled.View`
   height: 56px;
@@ -22,6 +23,7 @@ const ButtonsContainer = styled.View`
 export function BottomBar() {
   const history = useHistory();
   const { pathname } = useLocation();
+  const [selectedChannel] = useContext(SelectedChannelContext);
   const navigateToHome = useCallback(() => {
     history.push("/");
   }, []);
@@ -44,6 +46,7 @@ export function BottomBar() {
           iconType="home"
         />
         <IconButton
+          disabled={!selectedChannel}
           isActive={isPlaylistActive}
           onPress={navigateToPlayer}
           iconType="playlist"

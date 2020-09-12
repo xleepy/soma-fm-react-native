@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer, useCallback } from "react";
+import { useReducer } from "react";
 import { fetchXML, useDataFetchEffect } from "../utils";
 import AsyncStorage from "@react-native-community/async-storage";
 import debounce from "lodash.debounce";
@@ -68,6 +68,7 @@ function createSectionsMap(sectionsMap, channel) {
   const genre = channel.genre[0].split("|")[0];
   const existingSectionChannels = sectionsMap[genre] || [];
   return {
+    ...sectionsMap,
     [genre]: [...existingSectionChannels, channel],
   };
 }
@@ -76,7 +77,7 @@ function sortByListeners(a, b) {
   return Number(b.listeners[0]) - Number(a.listeners[0]);
 }
 
-function updateChannels(type, channels) {
+function updateChannels(type, channels = []) {
   switch (type) {
     case "favorite": {
       return channels.filter((channel) => channel.isFavorite);
@@ -183,9 +184,9 @@ export function useChannels() {
     []
   );
 
-  const channelsDispatch = (type) => {
+  const channelsDispatch = debounce((type) => {
     dispatch({ type });
-  };
+  });
 
   return [
     channels,

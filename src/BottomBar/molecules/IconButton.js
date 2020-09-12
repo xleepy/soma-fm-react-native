@@ -34,11 +34,11 @@ const Icon = styled.Image`
   height: 24px;
 `;
 
-export function IconButton({ iconType, onPress, isActive }) {
+export function IconButton({ iconType, onPress, isActive, disabled }) {
   const { inactive, active } = iconsMap[iconType];
   const icon = isActive ? active : inactive;
   return (
-    <TouchableHighlight onPress={onPress}>
+    <TouchableHighlight disabled={disabled} onPress={onPress}>
       <IconContainer>
         <Icon source={icon} />
       </IconContainer>

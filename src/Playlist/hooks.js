@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { fetchXML, useDataFetchEffect } from "../utils";
 
 const songsUrl = (channel) => `https://somafm.com/songs/${channel}.xml`;
@@ -14,11 +14,12 @@ export function useSongs(selectedChannel) {
   const [isFetching, refresh] = useDataFetchEffect(
     () => {
       if (!selectedChannel) {
-        return Promise.reject("Channel not selected");
+        return Promise.reject(new Error("Channel not selected"));
       }
       return fetchSongs(selectedChannel.$.id);
     },
     setSongs,
+    (err) => console.log(err),
     [selectedChannel]
   );
 
