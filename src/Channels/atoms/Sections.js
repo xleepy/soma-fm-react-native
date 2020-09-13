@@ -1,5 +1,6 @@
 import React from "react";
 import { SectionList, RefreshControl } from "react-native";
+import Animated from "react-native-reanimated";
 import styled from "styled-components";
 import { APP_WHITE_COLOR, BACKGROUND_COLOR } from "../../constants";
 
@@ -17,20 +18,16 @@ function renderSectionHeader({ section: { title } }) {
   return <SectionHeader>{title}</SectionHeader>;
 }
 
-export function Sections({
-  data,
-  renderItem,
-  onScroll,
-  isFetching,
-  onRefresh,
-}) {
+const AnimatedSection = Animated.createAnimatedComponent(SectionList);
+
+export function Sections({ data, renderItem, isFetching, onRefresh, ...rest }) {
   return (
-    <SectionList
+    <AnimatedSection
+      {...rest}
       sections={data}
       keyExtractor={(item) => item.$.id}
       renderItem={renderItem}
       renderSectionHeader={renderSectionHeader}
-      onScroll={onScroll}
       stickySectionHeadersEnabled
       refreshControl={
         <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />

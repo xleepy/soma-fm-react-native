@@ -4,6 +4,7 @@ import { TextContent } from "../molecules/TextContent";
 import { useSelectChannelAndRedirect } from "../../utils";
 import styled from "styled-components";
 import { FavoriteIconBtn } from "../molecules/FavoriteIconBtn";
+import { useCurrentPlayingChannel } from "../../Player/hooks";
 
 const TrackImage = styled.Image`
   width: 62px;
@@ -24,11 +25,8 @@ const AbsoluteContainer = styled.View`
   top: 0;
 `;
 
-export function Channel({ channel, onFavoritePress, isChannelPlaying }) {
+export function Channel({ channel, onFavoritePress }) {
   const selectChannel = useSelectChannelAndRedirect(channel);
-
-  const isPlaying = isChannelPlaying(channel.$.id);
-
   const {
     title,
     xlimage,
@@ -37,6 +35,10 @@ export function Channel({ channel, onFavoritePress, isChannelPlaying }) {
     isFavorite,
     $: { id },
   } = channel;
+
+  const currentlyPlaingChannel = useCurrentPlayingChannel();
+
+  const isPlaying = currentlyPlaingChannel === id;
 
   return (
     <TouchableHighlight onPress={selectChannel}>

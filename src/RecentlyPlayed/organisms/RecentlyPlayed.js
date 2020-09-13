@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FlatList, Animated } from "react-native";
 import { RecentlyPlayedChannel } from "../molecules/RecentlyPlayedChannel";
 import { getRecentlyPlayed } from "../utils";
@@ -19,18 +19,15 @@ const Title = styled.Text`
   margin-bottom: 14px;
 `;
 
-export function RecentlyPlayed({ isHidden = false }) {
-  const [items, setItems] = useState([]);
-  useDataFetchEffect(getRecentlyPlayed, setItems);
+const renderItem = ({ item }) => <RecentlyPlayedChannel channel={item} />;
 
-  const renderItem = ({ item }) => <RecentlyPlayedChannel channel={item} />;
-
+export function RecentlyPlayed({ recentlyPlayedChannels }) {
   return (
-    <Container isHidden={isHidden || items.length === 0}>
+    <Container>
       <Title>Recently Played</Title>
       <FlatList
         horizontal
-        data={items}
+        data={recentlyPlayedChannels}
         renderItem={renderItem}
         keyExtractor={(item) => item.$.id}
       />

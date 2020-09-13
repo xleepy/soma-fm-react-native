@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "react-native";
+import { SafeAreaView, StatusBar } from "react-native";
 import { NativeRouter, Route } from "react-router-native";
 import { BottomBar } from "./BottomBar/BottomBar";
 import SplashScreen from "react-native-splash-screen";
@@ -10,7 +10,7 @@ import { Channels } from "./Channels";
 
 import { usePlayerState } from "./Player/hooks";
 
-const AppContainer = styled.View`
+const AppContainer = styled(SafeAreaView)`
   background-color: #000;
   flex: 1;
   justify-content: center;
