@@ -1,16 +1,9 @@
-import { View, Linking } from "react-native";
-import React, { useCallback } from "react";
-import { Image } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { SongText } from "../atoms/SongText";
 import "intl";
 import "intl/locale-data/jsonp/en";
 import styled from "styled-components";
-import {
-  MenuTrigger,
-  MenuOption,
-  Menu,
-  MenuOptions,
-} from "react-native-popup-menu";
 import { PopupMenu } from "./PopupMenu";
 
 // TODO: move to generic components

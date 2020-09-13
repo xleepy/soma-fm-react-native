@@ -5,7 +5,7 @@
     "node": true,
     "es6": true
   },
-  "plugins": ["react", "react-native"],
+  "plugins": ["react", "react-native", "unused-imports"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2018,
@@ -118,6 +118,7 @@
     "no-throw-literal": 2, // restrict what can be thrown as an exception (off by default)
     "no-unused-expressions": 2, // disallow usage of expressions in statement position
     "no-void": 2, // disallow use of void operator (off by default)
+    "unused-imports/no-unused-imports": "error",
     "no-warning-comments": [
       0,
       { "terms": ["todo", "fixme"], "location": "start" }
@@ -150,7 +151,8 @@
     "no-undefined": 2, // disallow use of undefined variable (off by default)
     "no-unused-vars": "off", // disallow declaration of variables that are not used in the code
     "no-use-before-define": 2, // disallow use of variables before they are defined
-
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     //
     //Stylistic Issues
     //

@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React from "react";
 import { FlatList, Animated } from "react-native";
 import { RecentlyPlayedChannel } from "../molecules/RecentlyPlayedChannel";
-import { getRecentlyPlayed } from "../utils";
 import styled from "styled-components";
 import { APP_WHITE_COLOR } from "../../constants";
-import { useDataFetchEffect } from "../../utils";
 
 const Container = styled(Animated.View)`
   margin-bottom: 16px;

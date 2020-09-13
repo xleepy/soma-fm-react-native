@@ -2,13 +2,8 @@ import React, { useEffect, useState, useCallback, useContext } from "react";
 
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { SelectedChannelContext, PlayerStateContext } from "../App";
-import {
-  useTrackPlayerEvents,
-  TrackPlayerEvents,
-  STATE_PLAYING,
-  STATE_BUFFERING,
-} from "react-native-track-player";
-import { usePlayerSetup, usePlayerControls, usePlayerState } from "./hooks";
+import { STATE_PLAYING, STATE_BUFFERING } from "react-native-track-player";
+import { usePlayerSetup, usePlayerControls } from "./hooks";
 import styled from "styled-components";
 import { ActivityIndicator } from "react-native";
 import { APP_RED_COLOR, APP_WHITE_COLOR, BACKGROUND_COLOR } from "../constants";
