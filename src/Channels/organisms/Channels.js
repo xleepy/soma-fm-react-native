@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ButtonRow } from "../molecules/ButtonRow";
 import { useChannels } from "../hooks";
 import { RecentlyPlayed } from "../../RecentlyPlayed/organisms/RecentlyPlayed";
@@ -13,9 +13,9 @@ import { getRecentlyPlayed } from "../../RecentlyPlayed/utils";
 
 const RECENTLY_PLAYED_MAX_HEIGHT = 200;
 
-const INITIAL_LIST_HEIGHT = 400;
+const MINIMAL_SCROLL_START = 250;
 
-const SCROLL_OFFSET = 800;
+const SCROLL_OFFSET = 525;
 
 const Container = styled.View`
   margin-top: 24px;
@@ -50,8 +50,19 @@ export function Channels() {
 
   const animatedEvent = Animated.event(
     [{ nativeEvent: { contentOffset: { y: hideAnim } } }],
-    { useNativeDriver: true }
+    {
+      useNativeDriver: true,
+    }
   );
+
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      hideAnim.setValue(type === "genre" ? 0 : hideAnim);
+    }, 0);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [type]);
 
   const isHidden = recentlyPlayedChannels.length === 0;
 
@@ -63,12 +74,12 @@ export function Channels() {
         style={{
           display: isHidden ? "none" : "flex",
           opacity: hideAnim.interpolate({
-            inputRange: [INITIAL_LIST_HEIGHT, SCROLL_OFFSET],
+            inputRange: [MINIMAL_SCROLL_START, SCROLL_OFFSET],
             outputRange: [1, 0],
             extrapolate: "clamp",
           }),
           height: hideAnim.interpolate({
-            inputRange: [INITIAL_LIST_HEIGHT, SCROLL_OFFSET],
+            inputRange: [MINIMAL_SCROLL_START, SCROLL_OFFSET],
             outputRange: [recentlyPlayedHeight, 0],
             extrapolate: "clamp",
           }),
@@ -84,13 +95,13 @@ export function Channels() {
           renderItem={renderChannel}
           isFetching={isFetching}
           onRefresh={refreshChannels}
-          scrollEventThrottle={1}
+          scrollEventThrottle={16}
           onScroll={animatedEvent}
         />
       )}
       {type !== "genre" && (
         <AllChannels
-          scrollEventThrottle={1}
+          scrollEventThrottle={16}
           onScroll={animatedEvent}
           data={data}
           renderItem={renderChannel}

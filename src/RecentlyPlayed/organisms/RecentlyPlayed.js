@@ -1,10 +1,10 @@
 import React from "react";
-import { FlatList, Animated } from "react-native";
+import { FlatList, View } from "react-native";
 import { RecentlyPlayedChannel } from "../molecules/RecentlyPlayedChannel";
 import styled from "styled-components";
 import { APP_WHITE_COLOR } from "../../constants";
 
-const Container = styled(Animated.View)`
+const Container = styled(View)`
   margin-bottom: 16px;
   display: ${({ isHidden }) => (isHidden ? "none" : "flex")};
 `;
