@@ -21,7 +21,10 @@ const styles = StyleSheet.create({
 export function PopupMenu({ song }) {
   const handleYoutubeSelect = useCallback(() => {
     Linking.openURL(`https://www.youtube.com/results?search_query=${song}`);
-  }, []);
+  }, [song]);
+  const handleSpotifySelect = useCallback(() => {
+    Linking.openURL(`https://open.spotify.com/search/${song}`);
+  }, [song]);
   return (
     <Menu>
       <MenuTrigger style={styles.menuTrigger}>
@@ -33,6 +36,9 @@ export function PopupMenu({ song }) {
       </MenuTrigger>
       <MenuOptions>
         <MenuOption text="Youtube" onSelect={handleYoutubeSelect} />
+      </MenuOptions>
+      <MenuOptions>
+        <MenuOption text="Spotify" onSelect={handleSpotifySelect} />
       </MenuOptions>
     </Menu>
   );

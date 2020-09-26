@@ -7,6 +7,7 @@ import { Song } from "../molecules/Song";
 import styled from "styled-components";
 import { useSongs } from "../hooks";
 import { MenuProvider } from "react-native-popup-menu";
+import { useSelectedChannel } from "../../Contexts/SelectedChannelProvider";
 
 const ChannelNotFound = styled.Text`
   color: #ff0002;
@@ -20,7 +21,7 @@ const Container = styled.View`
 `;
 
 export function Playlist() {
-  const [selectedChannel] = useContext(SelectedChannelContext);
+  const { selectedChannel } = useSelectedChannel();
   const [songs, isFetching, refresh] = useSongs(selectedChannel);
 
   if (!selectedChannel) {

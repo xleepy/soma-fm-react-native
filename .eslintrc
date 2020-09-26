@@ -5,7 +5,12 @@
     "node": true,
     "es6": true
   },
-  "plugins": ["react", "react-native", "unused-imports"],
+  "plugins": [
+    "react",
+    "react-native",
+    "unused-imports",
+    "plugin:react-hooks/recommended"
+  ],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2018,

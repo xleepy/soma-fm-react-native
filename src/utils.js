@@ -1,7 +1,10 @@
 import { parseString } from "react-native-xml2js";
-import { useContext, useCallback, useEffect, useState } from "react";
-import { SelectedChannelContext } from "./App";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import {
+  SELECT_CHANNEL_ACTION,
+  useSelectChannel,
+} from "./Contexts/SelectedChannelProvider";
 
 export function parseXml(xml) {
   return new Promise((resolve, reject) => {
@@ -22,13 +25,14 @@ export function fetchXML(url) {
 }
 
 export function useChannelSelect(channel, callback) {
-  const [, setChannel] = useContext(SelectedChannelContext);
+  const dispatch = useSelectChannel();
+  const callbackRef = callback;
   return useCallback(() => {
-    setChannel(channel);
+    dispatch({ type: SELECT_CHANNEL_ACTION, channel });
     if (callback) {
       callback();
     }
-  }, [channel]);
+  }, [channel, callbackRef]);
 }
 
 export function useSelectChannelAndRedirect(channel) {

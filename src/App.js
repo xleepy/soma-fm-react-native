@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, StatusBar } from "react-native";
 import { NativeRouter, Route } from "react-router-native";
 import { BottomBar } from "./BottomBar/BottomBar";
@@ -8,7 +8,8 @@ import { Playlist } from "./Playlist/ogranisms/Playlist";
 import styled from "styled-components";
 import { Channels } from "./Channels";
 
-import { usePlayerState } from "./Player/hooks";
+import { PlayerStateProvider } from "./Contexts/PlayerStateProvider";
+import { SelectedChannelProvider } from "./Contexts/SelectedChannelProvider";
 
 const AppContainer = styled(SafeAreaView)`
   background-color: #000;
@@ -17,15 +18,9 @@ const AppContainer = styled(SafeAreaView)`
   padding: 16px 16px 0 16px;
 `;
 
-export const SelectedChannelContext = React.createContext();
-
-export const PlayerStateContext = React.createContext(0);
-
 TrackPlayer.registerPlaybackService(() => require("./Player/service.js"));
 
 export default function App() {
-  const [selectedChannel, setSelectedChannel] = useState(null);
-  const playerState = usePlayerState();
   useEffect(() => {
     SplashScreen.hide();
     StatusBar.setBackgroundColor("rgba(0,0,0,0)");
@@ -35,10 +30,8 @@ export default function App() {
 
   return (
     <NativeRouter>
-      <SelectedChannelContext.Provider
-        value={[selectedChannel, setSelectedChannel]}
-      >
-        <PlayerStateContext.Provider value={playerState}>
+      <PlayerStateProvider>
+        <SelectedChannelProvider>
           <AppContainer>
             <Route exact path="/">
               <Channels />
@@ -49,8 +42,8 @@ export default function App() {
             <StatusBar />
             <BottomBar />
           </AppContainer>
-        </PlayerStateContext.Provider>
-      </SelectedChannelContext.Provider>
+        </SelectedChannelProvider>
+      </PlayerStateProvider>
     </NativeRouter>
   );
 }

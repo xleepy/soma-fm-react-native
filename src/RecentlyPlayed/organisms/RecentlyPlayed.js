@@ -19,7 +19,7 @@ const Title = styled.Text`
 
 const renderItem = ({ item }) => <RecentlyPlayedChannel channel={item} />;
 
-export function RecentlyPlayed({ recentlyPlayedChannels }) {
+export function RecentlyPlayed({ recentlyPlayedChannels = [] }) {
   return (
     <Container>
       <Title>Recently Played</Title>

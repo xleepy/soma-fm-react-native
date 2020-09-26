@@ -34,6 +34,17 @@ async function getLatestFetchTimestamp() {
 
 async function fetchChannels(force = false) {
   const cachedChannels = await getCachedChannels();
+  const cachedChannelsMap = cachedChannels.reduce((channelsMap, channel) => {
+    const key = channel.$.id;
+    const isExists = channelsMap[key];
+    if (isExists) {
+      return channelsMap;
+    }
+    return {
+      ...channelsMap,
+      [key]: channel,
+    };
+  }, {});
   const latestFetchTimeStamp = await getLatestFetchTimestamp();
   // latest fetch timestamp + 10 min offset to refetch again on component mount
   const shouldUpdate =
@@ -44,7 +55,7 @@ async function fetchChannels(force = false) {
     return fetchXML("https://somafm.com/channels.xml").then(
       ({ channels: { channel } }) => {
         const modifiedChannels = channel.map((ch) => {
-          const cachedChannel = cachedChannels.find((c) => c.$.id === ch.$.id);
+          const cachedChannel = cachedChannelsMap[ch.$.id];
           if (cachedChannel) {
             return {
               ...cachedChannel,

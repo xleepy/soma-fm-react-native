@@ -5,7 +5,8 @@ import TrackPlayer, {
 } from "react-native-track-player";
 import { useEffect, useCallback, useState, useContext } from "react";
 import { addToRecentlyPlayed } from "../RecentlyPlayed/utils";
-import { SelectedChannelContext, PlayerStateContext } from "../App";
+import { useSelectedChannel } from "../Contexts/SelectedChannelProvider";
+import { PlayerStateContext } from "../Contexts/PlayerStateProvider";
 
 async function setupPlayer() {
   await TrackPlayer.setupPlayer({});
@@ -95,7 +96,7 @@ export function usePlayerState() {
 }
 
 export function useCurrentPlayingChannel() {
-  const [selectedChannel] = useContext(SelectedChannelContext);
+  const { selectedChannel } = useSelectedChannel();
   const state = useContext(PlayerStateContext);
   return selectedChannel && state === STATE_PLAYING && selectedChannel.$.id;
 }

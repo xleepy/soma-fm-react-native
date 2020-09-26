@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
 
 import { TouchableHighlight } from "react-native-gesture-handler";
-import { SelectedChannelContext, PlayerStateContext } from "../App";
 import { STATE_PLAYING, STATE_BUFFERING } from "react-native-track-player";
-import { usePlayerSetup, usePlayerControls } from "./hooks";
+import { usePlayerSetup, usePlayerControls, usePlayerState } from "./hooks";
 import styled from "styled-components";
 import { ActivityIndicator } from "react-native";
 import { APP_RED_COLOR, APP_WHITE_COLOR, BACKGROUND_COLOR } from "../constants";
+import { useSelectedChannel } from "../Contexts/SelectedChannelProvider";
+import { PlayerStateContext } from "../Contexts/PlayerStateProvider";
 
 const playIcon = require("../../assets/icons/play.png");
 const stopIcon = require("../../assets/icons/stop.png");
@@ -30,7 +31,7 @@ const Icon = styled.Image`
 `;
 
 export function Player() {
-  const [selectedChannel] = useContext(SelectedChannelContext);
+  const { selectedChannel } = useSelectedChannel();
   const playerState = useContext(PlayerStateContext);
 
   const [latestChannel, setLatestChannel] = useState(null);
@@ -38,7 +39,7 @@ export function Player() {
   const [play, stop] = usePlayerControls(selectedChannel, (channel) =>
     setLatestChannel(channel)
   );
-
+  usePlayerState();
   const isPlaying = playerState === STATE_PLAYING;
   const isBuffering = playerState === STATE_BUFFERING;
 

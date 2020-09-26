@@ -3,7 +3,7 @@ import { IconButton } from "./molecules/IconButton";
 import { useHistory, useLocation } from "react-router";
 import { Player } from "../Player/Player";
 import styled from "styled-components";
-import { SelectedChannelContext } from "../App";
+import { useSelectedChannel } from "../Contexts/SelectedChannelProvider";
 
 const Container = styled.View`
   height: 56px;
@@ -23,7 +23,7 @@ const ButtonsContainer = styled.View`
 export function BottomBar() {
   const history = useHistory();
   const { pathname } = useLocation();
-  const [selectedChannel] = useContext(SelectedChannelContext);
+  const { selectedChannel } = useSelectedChannel();
   const navigateToHome = useCallback(() => {
     history.push("/");
   }, []);

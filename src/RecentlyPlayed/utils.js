@@ -12,9 +12,11 @@ export async function getRecentlyPlayed() {
 
 export async function addToRecentlyPlayed(channel) {
   const channels = await getRecentlyPlayed();
-  const isPlayed = channels.some((ch) => ch.$.id === channel.$.id);
-  if (isPlayed) {
-    return;
+  const playingChannelIndex = channels.findIndex(
+    (ch) => ch.$.id === channel.$.id
+  );
+  if (playingChannelIndex !== -1) {
+    channels.splice(playingChannelIndex, 1);
   }
   if (channels.length > 7) {
     channels.splice(channels.length - 3, 3);
