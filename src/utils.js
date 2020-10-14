@@ -1,5 +1,5 @@
 import { parseString } from "react-native-xml2js";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import {
   SELECT_CHANNEL_ACTION,
@@ -26,11 +26,11 @@ export function fetchXML(url) {
 
 export function useChannelSelect(channel, callback) {
   const dispatch = useSelectChannel();
-  const callbackRef = callback;
+  const callbackRef = useRef(callback);
   return useCallback(() => {
     dispatch({ type: SELECT_CHANNEL_ACTION, channel });
     if (callback) {
-      callback();
+      callbackRef.current();
     }
   }, [channel, callbackRef]);
 }
