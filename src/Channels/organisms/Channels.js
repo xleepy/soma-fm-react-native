@@ -11,11 +11,13 @@ import Animated from "react-native-reanimated";
 import { useDataFetchEffect } from "../../utils";
 import { getRecentlyPlayed } from "../../RecentlyPlayed/utils";
 
-const RECENTLY_PLAYED_MAX_HEIGHT = 200;
+const RECENTLY_PLAYED_MAX_HEIGHT = 260;
 
-const MINIMAL_SCROLL_START = 250;
+const MINIMAL_SCROLL_START = 350;
+const LIST_HEIGHT = 500;
 
-const SCROLL_OFFSET = 525;
+const SCROLL_OFFSET =
+  LIST_HEIGHT + MINIMAL_SCROLL_START - RECENTLY_PLAYED_MAX_HEIGHT;
 
 const Container = styled.View`
   margin-top: 24px;
@@ -26,7 +28,14 @@ const StationsTitle = styled.Text`
   color: ${APP_WHITE_COLOR};
   font-size: 18px;
   line-height: 22px;
+  margin-bottom: 10px;
 `;
+
+const ChannelsContainer = styled.View`
+  flex: 1;
+  background-color: #000;
+`;
+export const scrollRangeForAnimation = 100;
 
 export function Channels() {
   const hideAnim = useRef(new Animated.Value(0)).current;
@@ -55,60 +64,66 @@ export function Channels() {
     }
   );
 
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      hideAnim.setValue(type === "genre" ? 0 : hideAnim);
-    }, 0);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [type]);
-
   const isHidden = recentlyPlayedChannels.length === 0;
 
-  const recentlyPlayedHeight = isHidden ? 0 : RECENTLY_PLAYED_MAX_HEIGHT;
+  const maxHeight = isHidden ? 0 : RECENTLY_PLAYED_MAX_HEIGHT;
+
+  const handleScroll = useCallback(
+    (e) => {
+      const scrollSensitivity = 4 / 3;
+      const offset = e.nativeEvent.contentOffset.y / scrollSensitivity;
+      hideAnim.setValue(offset);
+    },
+    [hideAnim]
+  );
+
+  const headerHeight = hideAnim.interpolate({
+    inputRange: [MINIMAL_SCROLL_START, SCROLL_OFFSET],
+    outputRange: [maxHeight, 0],
+    extrapolate: "clamp",
+  });
+
+  const opacity = hideAnim.interpolate({
+    inputRange: [MINIMAL_SCROLL_START, SCROLL_OFFSET],
+    outputRange: [1, 0],
+    extrapolate: "clamp",
+  });
 
   return (
     <Container>
       <Animated.View
         style={{
           display: isHidden ? "none" : "flex",
-          opacity: hideAnim.interpolate({
-            inputRange: [MINIMAL_SCROLL_START, SCROLL_OFFSET],
-            outputRange: [1, 0],
-            extrapolate: "clamp",
-          }),
-          height: hideAnim.interpolate({
-            inputRange: [MINIMAL_SCROLL_START, SCROLL_OFFSET],
-            outputRange: [recentlyPlayedHeight, 0],
-            extrapolate: "clamp",
-          }),
+          opacity,
+          height: headerHeight,
         }}
       >
         <RecentlyPlayed recentlyPlayedChannels={recentlyPlayedChannels} />
+        <ButtonRow currentType={type} dispatch={dispatch} />
       </Animated.View>
-      <StationsTitle>Stations</StationsTitle>
-      <ButtonRow currentType={type} dispatch={dispatch} />
-      {type === "genre" && (
-        <Sections
-          data={data}
-          renderItem={renderChannel}
-          isFetching={isFetching}
-          onRefresh={refreshChannels}
-          scrollEventThrottle={16}
-          onScroll={animatedEvent}
-        />
-      )}
-      {type !== "genre" && (
-        <AllChannels
-          scrollEventThrottle={16}
-          onScroll={animatedEvent}
-          data={data}
-          renderItem={renderChannel}
-          onRefresh={refreshChannels}
-          isFetching={isFetching}
-        />
-      )}
+      <ChannelsContainer>
+        <StationsTitle>Stations</StationsTitle>
+        {type === "genre" && (
+          <Sections
+            data={data}
+            renderItem={renderChannel}
+            isFetching={isFetching}
+            onRefresh={refreshChannels}
+            scrollEventThrottle={1}
+            onScroll={handleScroll}
+          />
+        )}
+        {type !== "genre" && (
+          <AllChannels
+            scrollEventThrottle={1}
+            onScroll={handleScroll}
+            data={data}
+            renderItem={renderChannel}
+            onRefresh={refreshChannels}
+            isFetching={isFetching}
+          />
+        )}
+      </ChannelsContainer>
     </Container>
   );
 }
