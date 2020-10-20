@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback } from "react";
 import { IconButton } from "./molecules/IconButton";
 import { useHistory, useLocation } from "react-router";
 import { Player } from "../Player/Player";
@@ -11,6 +11,8 @@ const Container = styled.View`
   flex-direction: row;
   align-items: center;
   position: relative;
+  background-color: black;
+  flex: none;
 `;
 
 const ButtonsContainer = styled.View`
@@ -34,8 +36,19 @@ export function BottomBar() {
     }
   }, [pathname]);
 
+  const navigateToTimer = useCallback(() => {
+    history.push("/timer");
+  }, []);
+
+  const navigateToAbout = useCallback(() => {
+    history.push("/about");
+  }, []);
+
   const isHomeActive = pathname.length === 1 && pathname.startsWith("/");
   const isPlaylistActive = pathname.includes("/player");
+
+  const isTimerActive = pathname.includes("/timer");
+  const isAboutActive = pathname.includes("/about");
 
   return (
     <Container>
@@ -54,8 +67,16 @@ export function BottomBar() {
       </ButtonsContainer>
       <Player />
       <ButtonsContainer>
-        <IconButton iconType="settings" />
-        <IconButton iconType="sleep" />
+        <IconButton
+          isActive={isTimerActive}
+          onPress={navigateToTimer}
+          iconType="settings"
+        />
+        <IconButton
+          isActive={isAboutActive}
+          onPress={navigateToAbout}
+          iconType="sleep"
+        />
       </ButtonsContainer>
     </Container>
   );

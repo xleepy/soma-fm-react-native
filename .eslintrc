@@ -9,7 +9,7 @@
     "react",
     "react-native",
     "unused-imports",
-    "plugin:react-hooks/recommended"
+    "react-hooks"
   ],
   "parserOptions": {
     "sourceType": "module",

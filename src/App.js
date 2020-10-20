@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, StatusBar } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { NativeRouter, Route } from "react-router-native";
 import { BottomBar } from "./BottomBar/BottomBar";
 import SplashScreen from "react-native-splash-screen";
@@ -20,6 +20,17 @@ const AppContainer = styled(SafeAreaView)`
 
 TrackPlayer.registerPlaybackService(() => require("./Player/service.js"));
 
+const styles = StyleSheet.create({
+  placesHolder: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placesHolderText: {
+    color: "white",
+  },
+});
+
 export default function App() {
   useEffect(() => {
     SplashScreen.hide();
@@ -39,9 +50,19 @@ export default function App() {
             <Route path="/player">
               <Playlist />
             </Route>
-            <StatusBar />
-            <BottomBar />
+            <Route path="/timer">
+              <View style={styles.placesHolder}>
+                <Text style={styles.placesHolderText}>Placeholder timer</Text>
+              </View>
+            </Route>
+            <Route path="/about">
+              <View style={styles.placesHolder}>
+                <Text style={styles.placesHolderText}>Placeholder about</Text>
+              </View>
+            </Route>
           </AppContainer>
+          <StatusBar />
+          <BottomBar />
         </SelectedChannelProvider>
       </PlayerStateProvider>
     </NativeRouter>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { ButtonRow } from "../molecules/ButtonRow";
 import { useChannels } from "../hooks";
 import { RecentlyPlayed } from "../../RecentlyPlayed/organisms/RecentlyPlayed";
@@ -14,7 +14,7 @@ import { getRecentlyPlayed } from "../../RecentlyPlayed/utils";
 const RECENTLY_PLAYED_MAX_HEIGHT = 260;
 
 const MINIMAL_SCROLL_START = 350;
-const LIST_HEIGHT = 500;
+const LIST_HEIGHT = 550;
 
 const SCROLL_OFFSET =
   LIST_HEIGHT + MINIMAL_SCROLL_START - RECENTLY_PLAYED_MAX_HEIGHT;
@@ -70,7 +70,7 @@ export function Channels() {
 
   const handleScroll = useCallback(
     (e) => {
-      const scrollSensitivity = 4 / 3;
+      const scrollSensitivity = 5 / 3;
       const offset = e.nativeEvent.contentOffset.y / scrollSensitivity;
       hideAnim.setValue(offset);
     },

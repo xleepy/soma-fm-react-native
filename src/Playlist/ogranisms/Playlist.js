@@ -1,8 +1,6 @@
 import React from "react";
-import { useContext } from "react";
 import { Header } from "../molecules/Header";
 import { ScrollView, RefreshControl } from "react-native";
-import { SelectedChannelContext } from "../../App";
 import { Song } from "../molecules/Song";
 import styled from "styled-components";
 import { useSongs } from "../hooks";
