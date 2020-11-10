@@ -5,7 +5,7 @@ import {
   MenuOption,
   MenuOptions,
 } from "react-native-popup-menu";
-import { useCallback } from "react";
+
 import { Linking, Image, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
 });
 
 export function PopupMenu({ song }) {
-  const handleYoutubeSelect = useCallback(() => {
+  const handleYoutubeSelect = () => {
     Linking.openURL(`https://www.youtube.com/results?search_query=${song}`);
-  }, [song]);
-  const handleSpotifySelect = useCallback(() => {
+  };
+  const handleSpotifySelect = () => {
     Linking.openURL(`https://open.spotify.com/search/${song}`);
-  }, [song]);
+  };
   return (
     <Menu>
       <MenuTrigger style={styles.menuTrigger}>

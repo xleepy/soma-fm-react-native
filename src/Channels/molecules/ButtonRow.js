@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Button } from "./Button";
 import styled from "styled-components";
 
@@ -11,21 +11,20 @@ const Container = styled.View`
 `;
 
 export function ButtonRow({ currentType, dispatch }) {
-  const handleFavoritePress = useCallback(() => {
+  const handleFavoritePress = () => {
     dispatch("favorite");
-  }, [dispatch]);
+  };
 
-  const handleAllPress = useCallback(() => {
+  const handleAllPress = () => {
     dispatch("all");
-  }, [dispatch]);
+  };
 
-  const handleByGenrePress = useCallback(() => {
+  const handleByGenrePress = () => {
     dispatch("genre");
-  }, [dispatch]);
-
-  const hanleByPopularityPress = useCallback(() => {
+  };
+  const hanleByPopularityPress = () => {
     dispatch("popularity");
-  }, [dispatch]);
+  };
 
   return (
     <Container>

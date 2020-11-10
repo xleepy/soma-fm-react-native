@@ -3,7 +3,7 @@ import TrackPlayer, {
   TrackPlayerEvents,
   STATE_PLAYING,
 } from "react-native-track-player";
-import { useEffect, useCallback, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { addToRecentlyPlayed } from "../RecentlyPlayed/utils";
 import { useSelectedChannel } from "../Contexts/SelectedChannelProvider";
 import { PlayerStateContext } from "../Contexts/PlayerStateProvider";
@@ -63,15 +63,15 @@ async function stop() {
 }
 
 export function usePlayerControls(selectedChannel, callback) {
-  const handlePlay = useCallback(() => {
+  const handlePlay = () => {
     if (selectedChannel) {
       play(selectedChannel).then(() => callback(selectedChannel));
     }
-  }, [selectedChannel]);
+  };
 
-  const handleStop = useCallback(() => {
+  const handleStop = () => {
     stop();
-  }, []);
+  };
 
   return [handlePlay, handleStop];
 }

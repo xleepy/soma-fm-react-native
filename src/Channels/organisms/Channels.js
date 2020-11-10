@@ -57,13 +57,6 @@ export function Channels() {
     []
   );
 
-  const animatedEvent = Animated.event(
-    [{ nativeEvent: { contentOffset: { y: hideAnim } } }],
-    {
-      useNativeDriver: true,
-    }
-  );
-
   const isHidden = recentlyPlayedChannels.length === 0;
 
   const maxHeight = isHidden ? 0 : RECENTLY_PLAYED_MAX_HEIGHT;

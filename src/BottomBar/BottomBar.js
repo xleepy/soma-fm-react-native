@@ -26,9 +26,9 @@ export function BottomBar() {
   const history = useHistory();
   const { pathname } = useLocation();
   const { selectedChannel } = useSelectedChannel();
-  const navigateToHome = useCallback(() => {
+  const navigateToHome = () => {
     history.push("/");
-  }, []);
+  };
 
   const navigateToPlayer = useCallback(() => {
     if (!pathname.includes("player")) {
@@ -36,13 +36,13 @@ export function BottomBar() {
     }
   }, [pathname]);
 
-  const navigateToTimer = useCallback(() => {
+  const navigateToTimer = () => {
     history.push("/timer");
-  }, []);
+  };
 
-  const navigateToAbout = useCallback(() => {
+  const navigateToAbout = () => {
     history.push("/about");
-  }, []);
+  };
 
   const isHomeActive = pathname.length === 1 && pathname.startsWith("/");
   const isPlaylistActive = pathname.includes("/player");
